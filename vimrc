@@ -68,8 +68,8 @@ endif
 "当有termguicolors特性时开启GUI配色
 "20180125:在tmux中不开启gurcolor
 if has("termguicolors")
-    let g:in_tmux = $TMUX
-    if len(g:in_tmux)==0
+    let g:colorterm = $COLORTERM
+    if g:colorterm=="truecolor"
         set termguicolors
     endif
 endif
