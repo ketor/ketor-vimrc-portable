@@ -66,8 +66,12 @@ if has("gui_running")
 endif
 
 "当有termguicolors特性时开启GUI配色
+"20180125:在tmux中不开启gurcolor
 if has("termguicolors")
-    set termguicolors
+    let g:in_tmux = $TMUX
+    if len(g:in_tmux)==0
+        set termguicolors
+    endif
 endif
 
 "代码缩进设置
