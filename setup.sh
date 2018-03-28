@@ -209,6 +209,18 @@ update() {
     cd $vim_pwd
 }
 
+update_remote() {
+    UPDATE_DATE=`date +%Y%m%d`
+    cd $vim_fullpath
+    git pull
+    git submodule update --init --recursive
+    git submodule update --remote
+    git commit -s -a -m "submodule: Update submodule $UPDATE_DATE."
+    git push
+    color_print "Update Remote finished!"
+    cd $vim_pwd
+}
+
 if [ $# -ne 1 ]; then
     logo
     require
@@ -219,7 +231,7 @@ if [ $# -ne 1 ]; then
     help
 fi
 
-while getopts ":iubln" opts; do
+while getopts ":iurbln" opts; do
     case $opts in
         i)
             logo
@@ -233,6 +245,11 @@ while getopts ":iubln" opts; do
             logo
             require
             update
+            ;;
+        r)
+            logo
+            require
+            update_remote
             ;;
         b)
             logo
