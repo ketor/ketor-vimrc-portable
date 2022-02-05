@@ -188,7 +188,7 @@ check_lang() {
 install() {
     color_print "Start install"
 
-    git clone https://github.com/coolceph/vimrc $vim_fullpath;
+    git clone https://github.com/ketor/vimrc-min $vim_fullpath;
     if [ $? -eq 0 ]; then
         cd $vim_fullpath
         git submodule update --init --recursive
