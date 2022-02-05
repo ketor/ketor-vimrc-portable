@@ -78,6 +78,7 @@ help() {
     echo "-i -- install vimrc"
     echo "-u -- update vimrc's plugins"
     echo "-b -- backup ~/.vim"
+    echo "-r -- update submodules from github"
     echo "-l -- link ~/.vim/vimrc to ~/.vimrc and make vim-proc, for green install from tar.gz"
     exit 0
 }
@@ -90,7 +91,7 @@ make_vimrc() {
         /bin/rm -f $HOME/.vimrc
     fi
     echo "source $vim_fullpath/vimrc" > $HOME/.vimrc
-    echo "colorscheme molokai" >> $HOME/.vimrc
+    echo "colorscheme jellybeans" >> $HOME/.vimrc
     color_print "Make vimrc finished"
 }
 
