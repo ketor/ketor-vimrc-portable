@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+then
+    echo "Usage: $0 username@server_address:base_path"
+    exit 0
+fi
+
+remote_server_and_path=$1
+git diff --name-only --diff-filter=AM | xargs -I '{}' scp '{}' ${remote_server_and_path}/'{}'
+
