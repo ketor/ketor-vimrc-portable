@@ -26,7 +26,7 @@
 " | F4       | tagbar开关          |
 " | F5       | 行号模式切换        |
 " | F6       | 是否显示特殊字符    |
-" | F7       | 更新ctags文件       |
+" | F7       | 更新ctags等文件     |
 " | F8       | 打开undotree        |
 " | F9       | 进入MultiCursor模式 |
 " | F10      | 打开YankRing剪贴板  |
@@ -208,6 +208,7 @@ inoremap <F2> <ESC>:call TogglePasteMode()<CR>i
 
 " toggle between no number, absolute number and relative number
 function! ToggleNumber()
+    echo "ToggleNumber"
     if !&number && !&relativenumber
         set number
     elseif !&relativenumber
@@ -224,13 +225,30 @@ noremap <F5> :call ToggleNumber()<CR>
 "使用F6开关list字符
 noremap <F6> :set invlist<CR>:set list?<CR>
 
-"使用F7更新ctags
-fun! UpdateCtags()
-    !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
-    echo "Create ctags OK"
+fun! GenerateCtags()
+    if executable("ctags")
+        !ctags -R --c++-kinds=+p --fields=+iaS --extras=+q .
+        echo "Generate ctags OK"
+    else
+        echo "ERROR! No ctags"
+    endif
 endfunction
 
-noremap <F7> :call UpdateCtags()<CR>
+"根据系统的环境决定生成gtags、cscope还是tags
+func! UpdateCtagsCscopeGtags()
+    if has("cscope") && executable("gtags") && executable("gtags-cscope")
+        call GenerateGtags()
+    elseif has("cscope") && executable("cscope")
+        call GenerateScope()
+    elseif executable("ctags")
+        call GenerateCtags()
+    else
+        echo "ERROR! No ctags, cscope, gtags, cannot index code"
+    endif
+endfunction
+
+"使用F7更新ctags,cscope,gtags
+noremap <F7> :call UpdateCtagsCscopeGtags()<CR>
 
 "鼠标模式切换
 fun! ToggleMouse()
@@ -752,26 +770,34 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     let g:vim_json_syntax_conceal = 0
 
 "cscope setting
-    function! AddScope()
-        " set csprg=/usr/local/bin/cscope
-        " set cscopetagorder=1
-        " set cscopetag
-        set nocsverb
-        " add any database in current directory
-        if filereadable("cscope.out")
-            cs add cscope.out
-        endif
-        set csverb
-    endfunction
+"20230116 Use AddGtagsScope now
+    " function! AddScope()
+    "     " set csprg=/usr/local/bin/cscope
+    "     " set cscopetagorder=1
+    "     " set cscopetag
+    "     set nocsverb
+    "     " add any database in current directory
+    "     if filereadable("cscope.out")
+    "         cs add cscope.out
+    "     endif
+    "     set csverb
+    " endfunction
 
+    let s:cs_add_flag = 0
     function! GenerateScope()
-        !find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.java" -o -name "*.php" -o -name "*.go"> cscope.files;cscope -bkq -i cscope.files
-        call AddScope()
+        if has("cscope") && executable("cscope")
+            !find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.java" -o -name "*.php" -o -name "*.go"> cscope.files;cscope -bkq -i cscope.files
+            " call AddScope()
+            call AddGtagsScope()
+            echo "Generate cscope OK"
+        else
+            echo "ERROR! No cscope"
+        endif
     endfunction
 
-    if has("cscope")
-        call AddScope()
-    endif
+    " if has("cscope")
+    "     call AddScope()
+    " endif
 
     " The following maps all invoke one of the following cscope search types:
     "   's'   symbol: find all references to the token under cursor
@@ -782,6 +808,7 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     "   'f'   file:   open the filename under cursor
     "   'i'   includes: find files that include the filename under cursor
     "   'd'   called: find functions that function under cursor calls
+    "   <C-_> means Ctrl+'-' in '+,-,*,/'
     nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
     nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -790,6 +817,59 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
     nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"gtags-cscope setting
+    function! AddGtagsScope()
+        " set csprg=/usr/local/bin/cscope
+        " set cscopetagorder=1 "改变cscope和tags的顺序为tags优先
+        if executable("gtags") && executable("gtags-cscope")
+            set cscopeprg=gtags-cscope
+            set nocsverb
+            " add any database in current directory
+            if filereadable("GTAGS")
+                if !s:cs_add_flag
+                    cs add GTAGS
+                    let s:cs_add_flag = 1
+                    set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
+                    echo "cs add GTAGS"
+                " else " gtags-scope不需要reset
+                "     cs reset
+                endif
+            endif
+            set csverb
+        elseif executable("cscope")
+            set cscopeprg=cscope
+            set nocsverb
+            " add any database in current directory
+            if filereadable("cscope.out")
+                if !s:cs_add_flag
+                    cs add cscope.out
+                    let s:cs_add_flag = 1
+                    set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
+                    echo "cs add cscope.out"
+                else
+                    cs reset
+                    echo "cs reset"
+                endif
+            endif
+            set csverb
+        endif
+    endfunction
+
+    function! GenerateGtags()
+        if has("cscope") && executable("gtags") && executable("gtags-cscope")
+            !gtags
+            call AddGtagsScope()
+            echo "Generate gtags OK"
+        else
+            echo "ERROR! No gtags"
+        endif
+    endfunction
+
+    "启动vim时根据实际情况自动加载索引
+    if has("cscope")
+        call AddGtagsScope()
+    endif
 
 "nerdtree-git-plugin
     let g:NERDTreeUpdateOnCursorHold = 0
@@ -822,7 +902,9 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     let g:gitgutter_eager = 0
 
 "自定义命令
-command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+" command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+command! Ctags call GenerateCtags()
+command! Gtags call GenerateGtags()
 command! Gotags !gotags -R . >tags
 command! Phptags !phpctags -R .
 command! Cscope call GenerateScope()
