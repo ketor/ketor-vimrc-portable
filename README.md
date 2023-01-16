@@ -4,7 +4,7 @@ The design principle of ketor vimrc is portable, cross-platform. ketor vimrc is 
 
 Enjoy it.
 
-![alt tag](https://github.com/ketor/ketor-vimrc-portable/blob/master/screenshot-1.png?raw=true)
+<img width="2024" alt="image" src="https://user-images.githubusercontent.com/3497139/212706787-c16b4326-2b25-4d35-9ffe-04a1507689cd.png">
 
 # Requirements
 
