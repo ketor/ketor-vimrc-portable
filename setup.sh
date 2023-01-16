@@ -1,6 +1,6 @@
 #!/bin/bash
 # |------------------------|
-# |    Coolceph VIMRC      |
+# |      ketor VIMRC       |
 # |------------------------|
 # |           _            |
 # |   __   __(_)___ ___    |
@@ -40,7 +40,7 @@ die() {
 }
 
 logo() {
-    color_print "Thank you for installing vimrc-min!"
+    color_print "Thank you for installing ketor-vimrc-portable!"
     color_print '            _         '
     color_print '    __   __(_)___ ___ '
     color_print '    | | / / / __ `__ \'
@@ -100,7 +100,7 @@ backup_vimrc() {
     cd $vim_dir
     backup_date=`date +%Y%m%d`
     color_print $backup_date
-    tar --exclude .git --exclude YouCompleteMe -czvf vimrc-$backup_date-mini.tar.gz $vim_path/bundle $vim_path/fonts $vim_path/vimrc* $vim_path/setup.sh $vim_path/.tmux.conf
+    tar --exclude .git --exclude YouCompleteMe -czvf vimrc-$backup_date-portable.tar.gz $vim_path/bundle $vim_path/fonts $vim_path/vimrc* $vim_path/setup.sh $vim_path/.tmux.conf
     cd $vim_pwd
     color_print "Backup Finished "$backup_date
 }
@@ -190,7 +190,7 @@ check_lang() {
 install() {
     color_print "Start install"
 
-    git clone https://github.com/ketor/vimrc-min $vim_fullpath;
+    git clone https://github.com/ketor/ketor-vimrc-portable $vim_fullpath;
     if [ $? -eq 0 ]; then
         cd $vim_fullpath
         git submodule update --init --recursive

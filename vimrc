@@ -1,5 +1,5 @@
 "|------------------------|
-"|    Coolceph VIMRC      |
+"|    Ketor    VIMRC      |
 "|------------------------|
 "|           _            |
 "|   __   __(_)___ ___    |
@@ -9,8 +9,8 @@
 "|                        |
 "|------------------------|
 "
-" Maintainer:	coolceph <https://github.com/coolceph/vimrc-min>
-" Last change:	2017.12.28
+" Maintainer:	ketor <https://github.com/ketor/vimrc-min>
+" Last change:	2023.01.16
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
