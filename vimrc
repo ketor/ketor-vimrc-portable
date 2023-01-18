@@ -904,6 +904,7 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
 "vim-gutentags
     " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
     " let g:gutentags_project_root += ['.root', '.svn', '.git', '.hg', '.project']
+    " 当前默认只允许手工开启gutentags，减小资源占用
     let g:gutentags_project_root = ['.root', '.project']
 
     " 所生成的数据文件的名称
@@ -930,7 +931,7 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
     " 禁用 gutentags 自动加载 gtags 数据库的行为
-    let g:gutentags_auto_add_gtags_cscope = 0
+    " let g:gutentags_auto_add_gtags_cscope = 0
 
 "自定义命令
 " command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
