@@ -44,6 +44,9 @@ if filereadable(expand("$HOME/.vim/bundle/YouCompleteMe/vimrc_ycm_minimal"))
 
     " 回车键选中补全项(有冲突，关闭此设置）
     "inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '\<CR>'
+
+    "使用 ctrl+z 激活语义补全
+    let g:ycm_key_invoke_completion = '<c-z>'
 else
     let g:my_complete_plugin = "neocomplcache"
 
