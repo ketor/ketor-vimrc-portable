@@ -124,3 +124,9 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/ycm-core/YouCompleteMe
+[submodule "bundle/gutentags_plus"]
+	path = bundle/gutentags_plus
+	url = https://github.com/skywind3000/gutentags_plus
+[submodule "bundle/quickr-cscope.vim"]
+	path = bundle/quickr-cscope.vim
+	url = https://github.com/ronakg/quickr-cscope.vim

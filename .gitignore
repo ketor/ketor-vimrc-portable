@@ -1,0 +1,13 @@
+.DS_Store
+xcuserdatad
+.vscode
+ketor.xcuserdatad
+tags
+tags.lock
+tags.temp
+GTAGS
+GRTAGS
+GPATH
+.root
+.project
+.cache

@@ -10,29 +10,30 @@
 "|------------------------|
 "
 " Maintainer:	ketor <https://github.com/ketor/vimrc-min>
-" Last change:	2023.01.16
+" Last change:	2023.01.18
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+"     for Amiga:  s:.vimrc
+"     for MS-DOS and Win32:  $VIM\_vimrc
+"     for OpenVMS:  sys$login:.vimrc
 "
-" +----------+---------------------+
-" | Key      | Function            |
-" +----------+---------------------+
-" | F2       | paste模式开关       |
-" | F3       | NerdTREE开关        |
-" | F4       | tagbar开关          |
-" | F5       | 行号模式切换        |
-" | F6       | 是否显示特殊字符    |
-" | F7       | 更新ctags等文件     |
-" | F8       | 打开undotree        |
-" | F9       | 进入MultiCursor模式 |
-" | F10      | 打开YankRing剪贴板  |
-" | F12      | 鼠标模式切换        |
-" | <Ctrl+c> | 快速推出VIM(:qall!) |
-" +----------+---------------------+
+" +--------+--------+---------------------+
+" | Key1   | Key2   | Function            |
+" +--------+--------+---------------------+
+" | F2     | <C-_>2 | paste模式开关       |
+" | F3     | <C-_>3 | NerdTREE开关        |
+" | F4     | <C-_>4 | tagbar开关          |
+" | F5     | <C-_>5 | 行号模式切换        |
+" | F6     | <C-_>6 | 是否显示特殊字符    |
+" | F7     | <C-_>7 | 更新ctags等文件     |
+" | F8     | <C-_>8 | 打开undotree        |
+" |        | <C-_>9 | 进入MultiCursor模式 |
+" | F10    | <C-_>y | 打开YankRing剪贴板  |
+" | F12    | <C-_>m | 鼠标模式切换        |
+" | <C-c>  |        | 快速推出VIM(:qall!) |
+" |        | <C-_>o | 切换cscope热键模式  |
+" +--------+--------+---------------------+
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -206,6 +207,9 @@ endfunction
 noremap <F2> :call TogglePasteMode()<CR>
 inoremap <F2> <ESC>:call TogglePasteMode()<CR>i
 
+noremap <C-_>2 :call TogglePasteMode()<CR>
+inoremap <C-_>2 <ESC>:call TogglePasteMode()<CR>i
+
 " toggle between no number, absolute number and relative number
 function! ToggleNumber()
     echo "ToggleNumber"
@@ -221,10 +225,13 @@ endfunc
 
 "使用F5切换行号模式
 noremap <F5> :call ToggleNumber()<CR>
+noremap <C-_>5 :call ToggleNumber()<CR>
 
 "使用F6开关list字符
 noremap <F6> :set invlist<CR>:set list?<CR>
+noremap <C-_>6 :set invlist<CR>:set list?<CR>
 
+"生成ctags
 fun! GenerateCtags()
     if executable("ctags")
         !ctags -R --c++-kinds=+p --fields=+iaS --extras=+q .
@@ -234,21 +241,37 @@ fun! GenerateCtags()
     endif
 endfunction
 
+"清空ctags, gtags, cscope
+function! CleanTags()
+    !rm -f cscope.files cscope.po.out cscope.out cscope.in.out GTAGS GPATH GRTAGS tags
+    echo "Clean cscope.files cscope.po.out cscope.out cscope.in.out GTAGS GPATH GRTAGS tags"
+endfunction
+
 "根据系统的环境决定生成gtags、cscope还是tags
+"有gtags则cscope使用gtags-cscope
 func! UpdateCtagsCscopeGtags()
-    if has("cscope") && executable("gtags") && executable("gtags-cscope")
-        call GenerateGtags()
-    elseif has("cscope") && executable("cscope")
-        call GenerateScope()
-    elseif executable("ctags")
+    if has("cscope")
+        if executable("gtags") && executable("gtags-cscope")
+            call GenerateGtags()
+        elseif executable("cscope")
+            call GenerateScope()
+        else
+            echo "ERROR! No gtags and cscope command"
+        endif
+    else
+        echo "ERROR! No cscope feature"
+    endif
+
+    if executable("ctags")
         call GenerateCtags()
     else
-        echo "ERROR! No ctags, cscope, gtags, cannot index code"
+        echo "ERROR! No ctags command"
     endif
 endfunction
 
 "使用F7更新ctags,cscope,gtags
 noremap <F7> :call UpdateCtagsCscopeGtags()<CR>
+noremap <C-_>7 :call UpdateCtagsCscopeGtags()<CR>
 
 "鼠标模式切换
 fun! ToggleMouse()
@@ -263,10 +286,14 @@ endfunction
 
 "开关YankRing剪贴板缓冲区
 nnoremap <F10> :YRShow<CR>
+nnoremap <C-_>y :YRShow<CR>
 
 "使用F12切换鼠标模式
 noremap <F12> :call ToggleMouse()<CR>
 inoremap <F12> <Esc>:call ToggleMouse()<CR>a
+
+noremap <C-_>m :call ToggleMouse()<CR>
+inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
 " With a map leader it's possible to do extra key combinations
     let mapleader=","
@@ -462,9 +489,11 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     let g:tagbar_width=26
     let g:tagbar_autofocus = 1
     noremap <silent> <F4> :TagbarToggle<CR>
+    noremap <silent> <C-_>4 :TagbarToggle<CR>
 
 "NerdTree配置
     map <F3> :NERDTreeToggle<CR>
+    map <C-_>3 :NERDTreeToggle<CR>
 
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.o','\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -637,6 +666,8 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     endfunction"}}}
 
     nnoremap <F8> :UndotreeToggle<cr>
+    nnoremap <C-_>8 :UndotreeToggle<cr>
+
     if has("persistent_undo")
         let s:undotree_dir = "~/.cache/undotree"
         call s:get_undotree_dir()
@@ -676,7 +707,8 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     "want to use a different key to start multicursor mode than for selecting
     "the next location, do like the following:
     " Map start key separately from next key
-    let g:multi_cursor_start_key='<F9>'
+    " let g:multi_cursor_start_key='<F9>'
+    let g:multi_cursor_start_key='<C-_>9'
 
     "Note that when multicursor mode is started, it selects current word with
     "boundaries, i.e. it behaves like *. If you want to avoid word boundaries in
@@ -769,6 +801,83 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
 "vim-json
     let g:vim_json_syntax_conceal = 0
 
+"functions for cscope setting
+    "标记当前cscope keymap的模式
+    "1 cscope标准调用
+    "2 Gscope封装过的调用，支持多模块时使用
+    let g:cs_keymap_flag = ""
+    function! AddCscopeQuickFixKeymap()
+        nmap <silent> <C-_>g <plug>(quickr_cscope_global)
+        nmap <silent> <C-_>s <plug>(quickr_cscope_symbols)
+        nmap <silent> <C-_>c <plug>(quickr_cscope_callers)
+        nmap <silent> <C-_>f <plug>(quickr_cscope_files)
+        nmap <silent> <C-_>i <plug>(quickr_cscope_includes)
+        nmap <silent> <C-_>t <plug>(quickr_cscope_text)
+        nmap <silent> <C-_>d <plug>(quickr_cscope_functions)
+        nmap <silent> <C-_>e <plug>(quickr_cscope_egrep)
+        nmap <silent> <C-_>a <plug>(quickr_cscope_assignments)
+
+        vmap <silent> <C-_>g <plug>(quickr_cscope_global)
+        vmap <silent> <C-_>s <plug>(quickr_cscope_symbols)
+        vmap <silent> <C-_>c <plug>(quickr_cscope_callers)
+        vmap <silent> <C-_>f <plug>(quickr_cscope_files)
+        vmap <silent> <C-_>i <plug>(quickr_cscope_includes)
+        vmap <silent> <C-_>t <plug>(quickr_cscope_text)
+        vmap <silent> <C-_>d <plug>(quickr_cscope_functions)
+        vmap <silent> <C-_>e <plug>(quickr_cscope_egrep)
+        vmap <silent> <C-_>a <plug>(quickr_cscope_assignments)
+
+        let g:cs_keymap_flag = "cscope"
+    endfunction
+
+    function! AddCscopeGutentagsKeymap()
+        nmap <silent> <C-_>g <Plug>GscopeFindDefinition
+        nmap <silent> <C-_>s <Plug>GscopeFindSymbol
+        nmap <silent> <C-_>c <Plug>GscopeFindCallingFunc
+        nmap <silent> <C-_>f <Plug>GscopeFindFile
+        nmap <silent> <C-_>i <Plug>GscopeFindInclude
+        nmap <silent> <C-_>t <Plug>GscopeFindText
+        nmap <silent> <C-_>d <Plug>GscopeFindCalledFunc
+        nmap <silent> <C-_>e <Plug>GscopeFindEgrep
+        nmap <silent> <C-_>a <Plug>GscopeFindAssign
+
+        nmap <silent> <C-_>z <Plug>GscopeFindCtag
+        nmap <silent> <C-_>k :GscopeKill<cr>
+
+        let g:cs_keymap_flag = "gscope"
+    endfunction
+
+    "切换切换cscope快捷键模式
+    fun! ToggleCscopeKeymap()
+        if g:cs_keymap_flag == "cscope"
+            call AddCscopeGutentagsKeymap()
+            echo "gutentags_plus Keymap"
+        elseif g:cs_keymap_flag == "gscope"
+            call AddCscopeQuickFixKeymap()
+            echo "quickr-cscope Keymap"
+        endif
+    endfunction
+    nmap <C-_>o :call ToggleCscopeKeymap()<CR>
+
+    function! AddCsopeKeymap()
+        " The following maps all invoke one of the following cscope search types:
+        "   'g'   global: find global definition(s) of the token under cursor
+        "   's'   symbol: find all references to the token under cursor
+        "   'c'   calls:  find all calls to the function name under cursor
+        "   't'   text:   find all instances of the text under cursor
+        "   'f'   file:   open the filename under cursor
+        "   'i'   includes: find files that include the filename under cursor
+        "   'd'   called: find functions that function under cursor calls
+        "   'e'   egrep:  egrep search for the word under cursor
+        "   'a'   assign: assignments egrep search for the word under cursor
+        "   <C-_> means Ctrl+'-' in '+,-,*,/'
+        if g:cs_add_flag > 0
+            call AddCscopeQuickFixKeymap()
+        else
+            call AddCscopeGutentagsKeymap()
+        endif
+    endfunction
+
 "cscope setting
 "20230116 Use AddGtagsScope now
     " function! AddScope()
@@ -783,7 +892,7 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     "     set csverb
     " endfunction
 
-    let s:cs_add_flag = 0
+    let g:cs_add_flag = 0
     function! GenerateScope()
         if has("cscope") && executable("cscope")
             !find . -name "*.h" -o -name "*.c" -o -name "*.cc" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.java" -o -name "*.php" -o -name "*.go"> cscope.files;cscope -bkq -i cscope.files
@@ -809,58 +918,60 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     "   'i'   includes: find files that include the filename under cursor
     "   'd'   called: find functions that function under cursor calls
     "   <C-_> means Ctrl+'-' in '+,-,*,/'
-    nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    " nmap <C-_>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+    " nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 "gtags-cscope setting
     function! AddGtagsScope()
         " set csprg=/usr/local/bin/cscope
         " set cscopetagorder=1 "改变cscope和tags的顺序为tags优先
-        if executable("gtags") && executable("gtags-cscope")
+        if executable("gtags") && executable("gtags-cscope") && filereadable("GTAGS")
             set cscopeprg=gtags-cscope
             set nocsverb
             " add any database in current directory
-            if filereadable("GTAGS")
-                if !s:cs_add_flag
-                    cs add GTAGS
-                    let s:cs_add_flag = 1
-                    set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
-                    echo "cs add GTAGS"
-                " else " gtags-scope不需要reset
-                "     cs reset
-                endif
+            if !g:cs_add_flag
+                cs add GTAGS
+                let g:cs_add_flag = 1
+                set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
+                echo "cs add GTAGS"
+            " else " gtags-scope不需要reset
+            "     cs reset
             endif
             set csverb
-        elseif executable("cscope")
+        elseif executable("cscope") && filereadable("cscope.out")
             set cscopeprg=cscope
             set nocsverb
             " add any database in current directory
-            if filereadable("cscope.out")
-                if !s:cs_add_flag
-                    cs add cscope.out
-                    let s:cs_add_flag = 1
-                    set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
-                    echo "cs add cscope.out"
-                else
-                    cs reset
-                    echo "cs reset"
-                endif
+            if !g:cs_add_flag
+                cs add cscope.out
+                let g:cs_add_flag = 1
+                set cscopetag "同时检索cscope和tags,默认会先检索cscope再检索tags
+                echo "cs add cscope.out"
+            else
+                cs reset
+                echo "cs reset"
             endif
             set csverb
         endif
+
+        call AddCsopeKeymap()
     endfunction
 
     function! GenerateGtags()
-        if has("cscope") && executable("gtags") && executable("gtags-cscope")
+        if executable("gtags")
             !gtags
-            call AddGtagsScope()
-            echo "Generate gtags OK"
+            if has("cscope") && executable("gtags-cscope")
+                call AddGtagsScope()
+                echo "Generate gtags and add gtags-cscope OK"
+            else
+                echo "Generate gtags OK, but not add gtags-cscope"
+            endif
         else
             echo "ERROR! No gtags"
         endif
@@ -903,8 +1014,8 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
 
 "vim-gutentags
     " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
-    " let g:gutentags_project_root += ['.root', '.svn', '.git', '.hg', '.project']
-    " 当前默认只允许手工开启gutentags，减小资源占用
+    " 默认人工指定需要自动生成tags的目录
+    let g:gutentags_add_default_project_roots = 0
     let g:gutentags_project_root = ['.root', '.project']
 
     " 所生成的数据文件的名称
@@ -933,6 +1044,30 @@ inoremap <F12> <Esc>:call ToggleMouse()<CR>a
     " 禁用 gutentags 自动加载 gtags 数据库的行为
     " let g:gutentags_auto_add_gtags_cscope = 0
 
+"gutentags_plus
+    " change focus to quickfix window after search (optional).
+    let g:gutentags_plus_switch = 1
+    let g:gutentags_plus_nomap = 1
+
+    " if get(g:, 'gutentags_plus_nomap', 0) == 0
+    "     nmap <silent> <leader>cs <Plug>GscopeFindSymbol
+    "     nmap <silent> <leader>cg <Plug>GscopeFindDefinition
+    "     nmap <silent> <leader>cc <Plug>GscopeFindCallingFunc
+    "     nmap <silent> <leader>ct <Plug>GscopeFindText
+    "     nmap <silent> <leader>ce <Plug>GscopeFindEgrep
+    "     nmap <silent> <leader>cf <Plug>GscopeFindFile
+    "     nmap <silent> <leader>ci <Plug>GscopeFindInclude
+    "     nmap <silent> <leader>cd <Plug>GscopeFindCalledFunc
+    "     nmap <silent> <leader>ca <Plug>GscopeFindAssign
+    "     nmap <silent> <leader>cz <Plug>GscopeFindCtag
+    "     nmap <silent> <leader>ck :GscopeKill<cr>
+    " endif
+
+"quickr-cscope.vim
+    let g:quickr_cscope_autoload_db = 0
+    let g:quickr_cscope_keymaps = 0
+    let g:quickr_cscope_use_qf_g = 1
+
 "自定义命令
 " command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
 command! Ctags call GenerateCtags()
@@ -940,9 +1075,14 @@ command! Gtags call GenerateGtags()
 command! Gotags !gotags -R . >tags
 command! Phptags !phpctags -R .
 command! Cscope call GenerateScope()
+command! Cleantags call CleanTags()
+command! ToggleCscopeKeymap call ToggleCscopeKeymap()
 
 command! Hex %!xxd
 command! Asc %!xxd -r
 
 command! Cswp !rm -f ~/.cache/swap_dir/*
+
+" nnoremap <leader>s yiw:cs find s <C-R>=expand("<cword>")<CR><CR>:cclose<CR>:cwindow<CR>/<C-R>0<CR>
+
 
