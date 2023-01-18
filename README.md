@@ -8,17 +8,30 @@ Enjoy it.
 
 # Requirements
 
+| Runtime | Min Version | Recommended Version (full support) | Python |
+|---------|-------------|------------------------------------|--------|
+| Vim     | 8.1.2269    | 9.0.214                            | 3.8    |
+| Neovim  | 0.5         | Vim 9.0.214                        | 3.8    |
+
 * Mac use terminal vim:
 
 ```
-brew install cmake go node mono rust
+brew install cmake go node mono rust python3
+brew install global cscope universal-ctags
 brew install vim
+
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py --all
 ```
 
 * Mac use MacVim:
 
 ```
-brew install cmake go node mono rust
+brew install cmake go node mono rust python3
+brew install global cscope universal-ctags
+
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py --all
 ```
 
 Download macvim from [https://github.com/macvim-dev/macvim/releases/latest] and install it to /Applications .
@@ -27,7 +40,17 @@ Do not install macvim from brew.
 
 * Linux user:
 
-Only vim 7.4.1578+ is required.
+Ubuntu 20.04+.
+
+```
+apt install build-essential cmake vim-nox python3-dev
+apt install mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm
+apt install global universal-ctags cscope
+apt install vim
+
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py --all
+```
 
 # Install
 
