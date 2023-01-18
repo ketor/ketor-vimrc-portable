@@ -154,6 +154,12 @@ The leader key is ','.
     ```
     Headers   Python    Resources bin       include   lib       share
     ```
-- *How insstall YouCompleteMe using root user*
+- *How install YouCompleteMe using root user*
 
     Add --force-sudo parameter.
+
+- *How to generate compile_commands.json*
+
+    cmake cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    
+    bear -- make
