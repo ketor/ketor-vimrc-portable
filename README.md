@@ -154,4 +154,6 @@ The leader key is ','.
     ```
     Headers   Python    Resources bin       include   lib       share
     ```
+- *How insstall YouCompleteMe using root user*
 
+    Add --force-sudo parameter.
