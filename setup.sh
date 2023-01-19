@@ -217,6 +217,7 @@ update_remote() {
     git pull
     git submodule update --init --recursive
     git submodule update --remote
+    git submodule update --init --recursive
     git commit -s -a -m "submodule: Update submodule $UPDATE_DATE."
     git push
     color_print "Update Remote finished!"
