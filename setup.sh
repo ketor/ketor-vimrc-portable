@@ -64,7 +64,7 @@ require() {
         fi
     fi
     vim_version=`$vim_exec --version|head -n 1|awk '{print $5}'|cut -c 1,3`
-    if [ ${vim_version} -lt 74 ]
+    if [ ${vim_version} -lt 80 ]
     then
         die "Your vim's version is too low! Please download higher version(7.4+) from http://www.vim.org/download.php"
     fi

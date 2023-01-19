@@ -97,7 +97,7 @@ The leader key is ','.
 
 - *How should I install vimrc on a Linux server with no internet*
 
-    Vim version 7.4+ is needed on your Linux server, then the steps:
+    Vim version 8.0+ is needed on your Linux server, then the steps:
 
     1) You need install vimrc on a Mac/Linux with internet first.
 
