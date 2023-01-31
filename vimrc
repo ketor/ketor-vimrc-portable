@@ -10,7 +10,7 @@
 "|------------------------|
 "
 " Maintainer:	ketor <https://github.com/ketor/vimrc-min>
-" Last change:	2023.01.18
+" Last change:	2023.01.31
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -18,22 +18,22 @@
 "     for MS-DOS and Win32:  $VIM\_vimrc
 "     for OpenVMS:  sys$login:.vimrc
 "
-" +--------+--------+---------------------+
-" | Key1   | Key2   | Function            |
-" +--------+--------+---------------------+
-" | F2     | <C-_>2 | paste模式开关       |
-" | F3     | <C-_>3 | NerdTREE开关        |
-" | F4     | <C-_>4 | tagbar开关          |
-" | F5     | <C-_>5 | 行号模式切换        |
-" | F6     | <C-_>6 | 是否显示特殊字符    |
-" | F7     | <C-_>7 | 更新ctags等文件     |
-" | F8     | <C-_>8 | 打开undotree        |
-" |        | <C-_>9 | 进入MultiCursor模式 |
-" | F10    | <C-_>y | 打开YankRing剪贴板  |
-" | F12    | <C-_>m | 鼠标模式切换        |
-" | <C-c>  |        | 快速推出VIM(:qall!) |
-" |        | <C-_>o | 切换cscope热键模式  |
-" +--------+--------+---------------------+
+" +--------+-------+---------------------+
+" | Ctrl   | Func  | Function            |
+" +--------+-------+---------------------+
+" | <C-_>2 | F2    | paste模式开关       |
+" | <C-_>3 | F3    | NerdTREE开关        |
+" | <C-_>4 | F4    | tagbar开关          |
+" | <C-_>5 | F5    | 行号模式切换        |
+" | <C-_>6 | F6    | 是否显示特殊字符    |
+" | <C-_>7 | F7    | 更新ctags等文件     |
+" | <C-_>8 | F8    | 打开undotree        |
+" | <C-_>9 | F9    | 进入MultiCursor模式 |
+" | <C-_>y | F10   | 打开YankRing剪贴板  |
+" | <C-_>m | F12   | 鼠标模式切换        |
+" | <C-c>  |       | 快速推出VIM(:qall!) |
+" | <C-_>o |       | 切换cscope热键模式  |
+" +--------+-------+---------------------+
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -707,8 +707,11 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     "want to use a different key to start multicursor mode than for selecting
     "the next location, do like the following:
     " Map start key separately from next key
-    " let g:multi_cursor_start_key='<F9>'
     let g:multi_cursor_start_key='<C-_>9'
+
+    "Manually bind F9 for second multi_cursor_start_key
+    nnoremap <silent> <F9>  :call multiple_cursors#new("n", 0)<CR>
+    xnoremap <silent> <F9>  :<C-u>call multiple_cursors#new("v", 0)<CR>
 
     "Note that when multicursor mode is started, it selects current word with
     "boundaries, i.e. it behaves like *. If you want to avoid word boundaries in
