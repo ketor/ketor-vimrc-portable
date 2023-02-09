@@ -1089,7 +1089,9 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     nmap <Leader>C :ClangFormatAutoToggle<CR>
 
     " enable auto format for c,cpp,objc
-    autocmd FileType c,cpp,objc ClangFormatAutoEnable
+    if executable("clang-format")
+        autocmd FileType c,cpp,objc ClangFormatAutoEnable
+    endif
 
 "自定义命令
 " command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
