@@ -130,3 +130,6 @@
 [submodule "bundle/quickr-cscope.vim"]
 	path = bundle/quickr-cscope.vim
 	url = https://github.com/ronakg/quickr-cscope.vim
+[submodule "bundle/vim-clang-format"]
+	path = bundle/vim-clang-format
+	url = https://github.com/rhysd/vim-clang-format

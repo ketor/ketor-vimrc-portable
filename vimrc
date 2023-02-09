@@ -1071,6 +1071,26 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:quickr_cscope_keymaps = 0
     let g:quickr_cscope_use_qf_g = 1
 
+"vim-clang-format
+    " use google c++ style
+    let g:clang_format#code_style = 'google'
+
+    " detects the style file like .clang-format or _clang-format
+    let g:clang_format#detect_style_file = 1
+
+    " auto format is default disable by this plugin
+    " let g:clang_format#auto_format = 0
+
+    " map to <Leader>cf in C++ code
+    autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
+    " Toggle auto formatting:
+    nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+    " enable auto format for c,cpp,objc
+    autocmd FileType c,cpp,objc ClangFormatAutoEnable
+
 "自定义命令
 " command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
 command! Ctags call GenerateCtags()
