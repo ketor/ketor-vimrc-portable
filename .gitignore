@@ -11,3 +11,4 @@ GPATH
 .root
 .project
 .cache
+compile_commands.json
