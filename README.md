@@ -51,6 +51,14 @@ apt install vim
 cd ~/.vim/bundle/YouCompleteMe
 python3 install.py --all
 ```
+Rocky 8.5+.
+
+```
+sudo yum install -y cmake gcc-c++ make python3-devel cscope vim ctags golang rust nodejs java-17-openjdk mono-complete ncurses-devel perl
+
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py --all
+```
 
 # Install
 
