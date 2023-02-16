@@ -383,10 +383,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     map <leader>p "+p
 
 " command mode, ctrl-a to head， ctrl-e to tail
-	cnoremap <C-j> <t_kd>
-	cnoremap <C-k> <t_ku>
-	cnoremap <C-a> <Home>
-	cnoremap <C-e> <End>
+    cnoremap <C-j> <t_kd>
+    cnoremap <C-k> <t_ku>
+    cnoremap <C-a> <Home>
+    cnoremap <C-e> <End>
 
 "代码折叠相关配置
 "    set foldmethod=syntax       "代码折叠 共有6中方式如下
@@ -475,7 +475,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
      "  let g:airline_symbols.linenr = '⭡'
 
  "CtrlP
-    nnoremap <silent> <space><space> :CtrlPMixed<cr>
+    nnoremap <silent> <space>m :CtrlPMixed<cr>
     nnoremap <silent> <space>f :CtrlP<cr>
     nnoremap <silent> <space>b :CtrlPBuffer<cr>
     nnoremap <silent> <space>t :CtrlPTag<cr>
@@ -555,15 +555,15 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 "Fugitive配置
-    nnoremap <Leader>gs :Gstatus<CR>
+    nnoremap <Leader>gs :Git status<CR>
     nnoremap <Leader>gr :Gremove<CR>
     "nnoremap <Leader>gl :Glog<CR>
-    nnoremap <Leader>gb :Gblame<CR>
+    nnoremap <Leader>gb :Git blame<CR>
     nnoremap <Leader>gm :Gmove
-    nnoremap <Leader>gp :Ggrep
+    nnoremap <Leader>gp :Git grep
     nnoremap <Leader>gR :Gread<CR>
     nnoremap <Leader>gg :Git
-    nnoremap <Leader>gd :Gdiff<CR>
+    nnoremap <Leader>gd :Git diff<CR>
 
 "vim-go & gotags config
     let g:go_highlight_functions = 1
@@ -1188,6 +1188,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ '&Find', ':call SearchBox()' ],
                 \ [ '&Clear Highlight', ':nohlsearch' ],
                 \ [ "ClangFor&mat\t(<leader>cf)", ':ClangFormat' ],
+                \ [ "Generate &Tags\t(<C-_>7)", ':call UpdateCtagsCscopeGtags()' ],
                 \ ])
 
     " view menu
@@ -1226,8 +1227,27 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
                 \ ])
 
+    " git menu
+    call quickui#menu#install("&Git", [
+                \ [ "Git l&og\t(<leader>gl)", ':GV' ],
+                \ [ "Git &status\t(<leader>gs)", ':Git status' ],
+                \ [ "Git &diff\t(<leader>gd)", ':Git diff' ],
+                \ [ "Git diffspl&it", ':Gdiffsplit' ],
+                \ [ "Git &blame\t(<leader>gb)", ':Git blame' ],
+                \ [ "Git &grep\t(<leader>gp)", ':Git grep' ],
+                \ [ "Git &remove\t(<leader>gr)", ':Gremove' ],
+                \ [ "Git &move\t(<leader>gm)", ':Gmove' ],
+                \ [ "Git &read\t(<leader>gp)", ':Gread' ],
+                \ [ "Git git\t(<leader>gg)", ':Git' ],
+                \ ])
+
     " hotkey menu
     call quickui#menu#install("Hot&Key", [
+                \ [ "-- CtrlP(OK) --\t(<space>)", '' ],
+                \ [ "CtrlPMixed\t(m)", ':CtrlPMixed' ],
+                \ [ "CtrlP\t(f)", ':CtrlP' ],
+                \ [ "CtrlPBuffer\t(b)", ':CtrlPBuffer' ],
+                \ [ "\CtrlPTagt(t)", ':CtrlPTag' ],
                 \ [ "-- CSCOPE --\t(<C-_>)", '' ],
                 \ [ "symbol\t(s)", '' ],
                 \ [ "global\t(g)", '' ],
