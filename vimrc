@@ -1202,7 +1202,8 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     call quickui#menu#install("&Window", [
                 \ [ "&Buffer List", ":call quickui#tools#list_buffer('tabedit')" ],
                 \ [ "&Function List", ':call quickui#tools#list_function()' ],
-                \ [ "Preview Ta&g", ':call quickui#tools#preview_tag('')' ],
+                \ [ "--", '' ],
+                \ [ "Preview Ta&g\t(<C-_>p)", ':call quickui#tools#preview_tag('')' ],
                 \ [ "--", '' ],
                 \ [ "&Terminal", ":call OpenTerminal('bash', '')" ],
                 \ [ "&Python", ":call OpenTerminal('python3', '')" ],
