@@ -133,3 +133,6 @@
 [submodule "bundle/vim-clang-format"]
 	path = bundle/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format
+[submodule "bundle/vim-quickui"]
+	path = bundle/vim-quickui
+	url = https://github.com/skywind3000/vim-quickui

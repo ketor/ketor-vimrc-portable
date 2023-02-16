@@ -10,7 +10,7 @@
 "|------------------------|
 "
 " Maintainer:	ketor <https://github.com/ketor/vimrc-min>
-" Last change:	2023.01.31
+" Last change:	2023.02.16
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -161,6 +161,13 @@ set backupskip=/tmp/*,/private/tmp/*"
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
+" use vim-quickui to display message in the textbox
+function! MsgBox(content)
+    let question = a:content
+    let choices = "&OK\n&Cancel"
+    let choice = quickui#confirm#open(question, choices, 1, 'MessageBox')
+endfunc
+
 "开关复制模式
 fun! TogglePasteMode()
     if !exists("s:old_pastemode")
@@ -184,6 +191,7 @@ fun! TogglePasteMode()
         endif
 
         echo "set edit mode"
+        call MsgBox("set edit mode OK")
     else
         let s:old_pastemode = "0"
         set nonumber
@@ -200,6 +208,7 @@ fun! TogglePasteMode()
         let &list="0"
 
         echo "set copy/paste mode"
+        call MsgBox("set copy/paste mode OK")
     endif
 endfunction
 
@@ -236,8 +245,10 @@ fun! GenerateCtags()
     if executable("ctags")
         !ctags -R --c++-kinds=+p --fields=+iaS --extras=+q .
         echo "Generate ctags OK"
+        call MsgBox("Generate ctags OK")
     else
         echo "ERROR! No ctags"
+        call MsgBox("ERROR! No ctags")
     endif
 endfunction
 
@@ -245,6 +256,7 @@ endfunction
 function! CleanTags()
     !rm -f cscope.files cscope.po.out cscope.out cscope.in.out GTAGS GPATH GRTAGS tags
     echo "Clean cscope.files cscope.po.out cscope.out cscope.in.out GTAGS GPATH GRTAGS tags"
+    call MsgBox("Clean cscope.files cscope.po.out cscope.out cscope.in.out GTAGS GPATH GRTAGS tags")
 endfunction
 
 "根据系统的环境决定生成gtags、cscope还是tags
@@ -257,15 +269,18 @@ func! UpdateCtagsCscopeGtags()
             call GenerateScope()
         else
             echo "ERROR! No gtags and cscope command"
+            call MsgBox("ERROR! No gtags and cscope command")
         endif
     else
         echo "ERROR! No cscope feature"
+        call MsgBox("ERROR! No cscope feature")
     endif
 
     if executable("ctags")
         call GenerateCtags()
     else
         echo "ERROR! No ctags command"
+        call MsgBox("ERROR! No ctags command")
     endif
 endfunction
 
@@ -278,9 +293,11 @@ fun! ToggleMouse()
     if &mouse == ""
         let &mouse = "a"
         echo "Mouse is for Vim (" . &mouse . ")"
+        call MsgBox("Mouse is for Vim (" . &mouse . ")")
     else
         let &mouse = ""
         echo "Mouse is for Vim (" . &mouse . ")"
+        call MsgBox("Mouse is for Vim (" . &mouse . ")")
     endif
 endfunction
 
@@ -855,9 +872,11 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
         if g:cs_keymap_flag == "cscope"
             call AddCscopeGutentagsKeymap()
             echo "gutentags_plus Keymap"
+            call MsgBox("gutentags_plus Keymap")
         elseif g:cs_keymap_flag == "gscope"
             call AddCscopeQuickFixKeymap()
             echo "quickr-cscope Keymap"
+            call MsgBox("quickr-cscope Keymap")
         endif
     endfunction
     nmap <C-_>o :call ToggleCscopeKeymap()<CR>
@@ -902,8 +921,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
             " call AddScope()
             call AddGtagsScope()
             echo "Generate cscope OK"
+            call MsgBox("Generate cscope OK")
         else
             echo "ERROR! No cscope"
+            call MsgBox("ERROR! No cscope")
         endif
     endfunction
 
@@ -972,11 +993,14 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
             if has("cscope") && executable("gtags-cscope")
                 call AddGtagsScope()
                 echo "Generate gtags and add gtags-cscope OK"
+                call MsgBox("Generate gtags and add gtags-cscope OK")
             else
                 echo "Generate gtags OK, but not add gtags-cscope"
+                call MsgBox("Generate gtags OK, but not add gtags-cscope")
             endif
         else
             echo "ERROR! No gtags"
+            call MsgBox("ERROR! No gtags")
         endif
     endfunction
 
@@ -1092,6 +1116,139 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     if executable("clang-format")
         autocmd FileType c,cpp,objc ClangFormatAutoEnable
     endif
+
+"vim-quickui
+    " If you have many items in the quickfix window, instead of open them one by one, you are able to press p in the quickfix window and preview them in the popup
+    " This piece of code setup a p keymap in your quickfix window to preview items, and press p again to close the preview window.
+    augroup MyQuickfixPreview
+      au!
+      au FileType qf noremap <silent><buffer> p :call quickui#tools#preview_quickfix()<cr>
+    augroup END
+
+    " use preview popup to view tag
+    nnoremap <C-_>p :call quickui#tools#preview_tag('')<cr>
+    nnoremap <C-_>j :call quickui#preview#scroll(5)<cr>
+    nnoremap <C-_>k :call quickui#preview#scroll(-5)<cr>
+
+    " enable to display tips in the cmdline
+    let g:quickui_show_tip = 1
+
+    " change the color scheme
+    let g:quickui_color_scheme = 'borland'
+    " Open a terminal
+    function! TermExit(code)
+        echom "terminal exit code: ". a:code
+    endfunc
+
+    function! OpenTerminal(cmd, code)
+        let opts = {'w':80, 'h':30, 'callback':'TermExit'}
+        let opts.title = 'Terminal [' . a:cmd . '] Popup'
+        call quickui#terminal#open(a:cmd, opts)
+    endfunc
+
+    " display vim messages in the textbox
+    function! DisplayMessages()
+        let x = ''
+        redir => x
+        silent! messages
+        redir END
+        let x = substitute(x, '[\n\r]\+\%$', '', 'g')
+        let content = filter(split(x, "\n"), 'v:key != ""')
+        let opts = {"close":"button", "title":"Vim Messages"}
+        call quickui#textbox#open(content, opts)
+    endfunc
+
+    function! SearchBox()
+        let cword = expand('<cword>')
+        let title = 'Enter text to search:'
+        let text = quickui#input#open(title, cword, 'search')
+        if text != ''
+            let text = escape(text, '[\/*~^')
+            call feedkeys("\<ESC>/" . text . "\<cr>", 'n')
+        endif
+    endfunc
+
+    " clear all the menus
+    call quickui#menu#reset()
+
+    " file menu
+    call quickui#menu#install('&File', [
+                \ [ "&New Tab", ':tabnew' ],
+                \ [ "&Close Tab", ':tabclose' ],
+                \ [ "--", '' ],
+                \ [ "&Save", ':w'],
+                \ [ "Save &All", ':wa' ],
+                \ [ "--", '' ],
+                \ [ "Sav&e Exit", ':wqall' ],
+                \ [ "Force E&xit", ':qall!' ],
+                \ ])
+
+    " edit menu
+    call quickui#menu#install('&Edit', [
+                \ [ '&Find', ':call SearchBox()' ],
+                \ [ '&Clear Highlight', ':nohlsearch' ],
+                \ ])
+
+    " view menu
+    call quickui#menu#install("&View", [
+                \ [ "&NerdTree\t(F2)", ':NERDTreeToggle' ],
+                \ [ "&Tagbar\t(F4)", ':TagbarToggle' ],
+                \ [ "--", '' ],
+                \ [ "&Undotre\t(F8)", ':call UndotreToggle()' ],
+                \ [ "&YankRing\t(F10)", ':YRShow' ],
+                \ ])
+
+    " window menu
+    call quickui#menu#install("&Window", [
+                \ [ "&Buffers\t()", ":call quickui#tools#list_buffer('tabedit')" ],
+                \ [ "&Functions\t()", ':call quickui#tools#list_function()' ],
+                \ [ "Ta&g Preview\t()", ':call quickui#tools#preview_tag('')' ],
+                \ [ "--", '' ],
+                \ [ "&Terminal\t()", ":call OpenTerminal('bash', '')" ],
+                \ [ "&Python\t()", ":call OpenTerminal('python3', '')" ],
+                \ [ "--", '' ],
+                \ [ "&Messages\t()", ":call DisplayMessages()" ],
+                \ ])
+
+    " option menu
+    call quickui#menu#install("&Option", [
+                \ [ "Toggle &Number\t(F5)", ':call ToggleNumber()' ],
+                \ [ "Set &Paste %{&paste? '(On)':'(Off)'}\t(F2)", ':call TogglePasteMode()' ],
+                \ [ 'Set &CursorLine %{&cursorline? "(Off)":"(On)"}', 'set cursorline!' ],
+                \ [ 'Set L&ist %{&list? "(Off)":"(On)"}', 'set list!' ],
+                \ [  "--", '' ],
+                \ [ "Mouse &Disable \t(F10)", 'set mouse=' ],
+                \ [ "Mouse &Enable \t(F10)", 'set mouse=a' ],
+                \ [  "--", '' ],
+                \ [ 'Set &Spell %{&spell? "(Off)":"(On)"}', 'set spell!' ],
+                \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
+                \ ])
+
+    " hotkey menu
+    call quickui#menu#install("Hot&Key", [
+                \ [ "-- Cscope <C-_> --", '' ],
+                \ [ "symbol\t(s)", '' ],
+                \ [ "global\t(g)", '' ],
+                \ [ "calls\t(c)", '' ],
+                \ [ "text\t(t)", '' ],
+                \ [ "egrep\t(e)", '' ],
+                \ [ "file\t(f)", '' ],
+                \ [ "includes\t(i)", '' ],
+                \ [ "called\t(d)", '' ],
+                \ ])
+
+    " help menu
+    call quickui#menu#install('&Help', [
+                \ [ "&Cheatsheet", 'help index', '' ],
+                \ [ 'T&ips', 'help tips', '' ],
+                \ [ '--','' ],
+                \ [ "&Tutorial", 'help tutor', '' ],
+                \ [ '&Quick Reference', 'help quickref', '' ],
+                \ [ '&Summary', 'help summary', '' ],
+                \ ], 10000)
+
+    " hit space twice to open menu
+    noremap <space><space> :call quickui#menu#open()<cr>
 
 "自定义命令
 " command! Ctags !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
