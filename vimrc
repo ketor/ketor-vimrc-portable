@@ -1200,14 +1200,14 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " window menu
     call quickui#menu#install("&Window", [
-                \ [ "&Buffers\t()", ":call quickui#tools#list_buffer('tabedit')" ],
-                \ [ "&Functions\t()", ':call quickui#tools#list_function()' ],
-                \ [ "Ta&g Preview\t()", ':call quickui#tools#preview_tag('')' ],
+                \ [ "&Buffer List", ":call quickui#tools#list_buffer('tabedit')" ],
+                \ [ "&Function List", ':call quickui#tools#list_function()' ],
+                \ [ "Preview Ta&g", ':call quickui#tools#preview_tag('')' ],
                 \ [ "--", '' ],
-                \ [ "&Terminal\t()", ":call OpenTerminal('bash', '')" ],
-                \ [ "&Python\t()", ":call OpenTerminal('python3', '')" ],
+                \ [ "&Terminal", ":call OpenTerminal('bash', '')" ],
+                \ [ "&Python", ":call OpenTerminal('python3', '')" ],
                 \ [ "--", '' ],
-                \ [ "&Messages\t()", ":call DisplayMessages()" ],
+                \ [ "&Messages", ":call DisplayMessages()" ],
                 \ ])
 
     " option menu
