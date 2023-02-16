@@ -1134,7 +1134,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:quickui_show_tip = 1
 
     " change the color scheme
-    let g:quickui_color_scheme = 'borland'
+    let g:quickui_color_scheme = 'gruvbox'
     " Open a terminal
     function! TermExit(code)
         echom "terminal exit code: ". a:code
