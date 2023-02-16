@@ -1187,6 +1187,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     call quickui#menu#install('&Edit', [
                 \ [ '&Find', ':call SearchBox()' ],
                 \ [ '&Clear Highlight', ':nohlsearch' ],
+                \ [ "ClangFor&mat\t(<leader>cf)", ':ClangFormat' ],
                 \ ])
 
     " view menu
@@ -1203,10 +1204,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&Buffer List", ":call quickui#tools#list_buffer('tabedit')" ],
                 \ [ "&Function List", ':call quickui#tools#list_function()' ],
                 \ [ "--", '' ],
-                \ [ "Preview Ta&g\t(<C-_>p)", ':call quickui#tools#preview_tag('')' ],
+                \ [ "&Preview Tag\t(<C-_>p)", ":call quickui#tools#preview_tag('')" ],
                 \ [ "--", '' ],
                 \ [ "&Terminal", ":call OpenTerminal('bash', '')" ],
-                \ [ "&Python", ":call OpenTerminal('python3', '')" ],
+                \ [ "P&ython", ":call OpenTerminal('python3', '')" ],
                 \ [ "--", '' ],
                 \ [ "&Messages", ":call DisplayMessages()" ],
                 \ ])
@@ -1227,7 +1228,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " hotkey menu
     call quickui#menu#install("Hot&Key", [
-                \ [ "-- Cscope <C-_> --", '' ],
+                \ [ "-- CSCOPE --\t(<C-_>)", '' ],
                 \ [ "symbol\t(s)", '' ],
                 \ [ "global\t(g)", '' ],
                 \ [ "calls\t(c)", '' ],
@@ -1236,6 +1237,15 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "file\t(f)", '' ],
                 \ [ "includes\t(i)", '' ],
                 \ [ "called\t(d)", '' ],
+                \ [ "-- YCM --\t(<leader>)", '' ],
+                \ [ "GetDoc\t(yc)", '' ],
+                \ [ "GoToInclude\t(yf)", '' ],
+                \ [ "GetType\t(yt)", '' ],
+                \ [ "GoTo\t(jj)", '' ],
+                \ [ "GoToDefinitionElseDeclaration\t(jd)", '' ],
+                \ [ "GoToReferences\t(jr)", '' ],
+                \ [ "GoToImplementation\t(ji)", '' ],
+                \ [ "GoToCallers\t(jc)", '' ],
                 \ ])
 
     " help menu
