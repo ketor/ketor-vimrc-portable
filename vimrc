@@ -1223,6 +1223,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&Terminal", ":call OpenTerminal('bash', '')" ],
                 \ [ "P&ython", ":call OpenTerminal('python3', '')" ],
                 \ [ "--", '' ],
+                \ [ "&QuickFix\t(<leader>q)", ":call ToggleQuickfixList()" ],
                 \ [ "&Messages", ":call DisplayMessages()" ],
                 \ ])
 
