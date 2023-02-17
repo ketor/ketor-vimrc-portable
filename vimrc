@@ -1187,6 +1187,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     call quickui#menu#install('&Edit', [
                 \ [ '&Find', ':call SearchBox()' ],
                 \ [ '&Clear Highlight', ':nohlsearch' ],
+                \ [ "--", '' ],
                 \ [ "ClangFor&mat\t(<leader>cf)", ':ClangFormat' ],
                 \ [ "Generate &Tags\t(<C-_>7)", ':call UpdateCtagsCscopeGtags()' ],
                 \ ])
@@ -1196,7 +1197,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&NerdTree\t(F2)", ':NERDTreeToggle' ],
                 \ [ "&Tagbar\t(F4)", ':TagbarToggle' ],
                 \ [ "--", '' ],
-                \ [ "&Undotre\t(F8)", ':call UndotreToggle()' ],
+                \ [ "&Undotree\t(F8)", ':UndotreeToggle' ],
                 \ [ "&YankRing\t(F10)", ':YRShow' ],
                 \ ])
 
@@ -1276,6 +1277,8 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&Tutorial", 'help tutor', '' ],
                 \ [ '&Quick Reference', 'help quickref', '' ],
                 \ [ '&Summary', 'help summary', '' ],
+                \ [ '--','' ],
+                \ [ '&About', ":call MsgBox('ketor-vimrc-portable 2023.2')", '' ],
                 \ ], 10000)
 
     " hit space twice to open menu
