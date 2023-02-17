@@ -9,8 +9,8 @@
 "|                        |
 "|------------------------|
 "
-" Maintainer:	ketor <https://github.com/ketor/vimrc-min>
-" Last change:	2023.02.16
+" Maintainer:  ketor <https://github.com/ketor/vimrc-min>
+" Last change: 2023.02.16
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -118,7 +118,7 @@ if has("autocmd")
 
 else
 
-    set autoindent		" always set autoindenting on
+    set autoindent " always set autoindenting on
 
 endif " has("autocmd")
 
@@ -536,35 +536,35 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
 "rainbow配置
     let g:rainbow_conf = {
-    \	'guifgs': ['RoyalBlue3', 'SeaGreen3', 'DarkOrchid3', 'firebrick3', 'darkorange3'],
-    \	'ctermfgs': ['red','darkred','darkcyan','darkgreen','Darkblue','darkmagenta','gray','brown','darkmagenta','darkred','darkcyan','darkgreen','darkgray','Darkblue','brown'],
-    \	'operators': '_,_',
-    \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-    \	'separately': {
-    \		'*': {},
-    \		'lisp': {
-    \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-    \		},
-    \		'tex': {
-    \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-    \		},
-    \		'vim': {
-    \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-    \		},
-    \		'xml': {
-    \			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
-    \		},
-    \		'xhtml': {
-    \			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
-    \		},
-    \		'html': {
-    \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-    \		},
-    \		'php': {
-    \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold', 'start=/(/ end=/)/ containedin=@htmlPreproc contains=@phpClTop', 'start=/\[/ end=/\]/ containedin=@htmlPreproc contains=@phpClTop', 'start=/{/ end=/}/ containedin=@htmlPreproc contains=@phpClTop'],
-    \		},
-    \		'css': 0,
-    \	}
+    \    'guifgs': ['RoyalBlue3', 'SeaGreen3', 'DarkOrchid3', 'firebrick3', 'darkorange3'],
+    \    'ctermfgs': ['red','darkred','darkcyan','darkgreen','Darkblue','darkmagenta','gray','brown','darkmagenta','darkred','darkcyan','darkgreen','darkgray','Darkblue','brown'],
+    \    'operators': '_,_',
+    \    'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+    \    'separately': {
+    \        '*': {},
+    \        'lisp': {
+    \            'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+    \        },
+    \        'tex': {
+    \            'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+    \        },
+    \        'vim': {
+    \            'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+    \        },
+    \        'xml': {
+    \            'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
+    \        },
+    \        'xhtml': {
+    \            'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
+    \        },
+    \        'html': {
+    \            'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+    \        },
+    \        'php': {
+    \            'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold', 'start=/(/ end=/)/ containedin=@htmlPreproc contains=@phpClTop', 'start=/\[/ end=/\]/ containedin=@htmlPreproc contains=@phpClTop', 'start=/{/ end=/}/ containedin=@htmlPreproc contains=@phpClTop'],
+    \        },
+    \        'css': 0,
+    \    }
     \}
 
     let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
@@ -1232,10 +1232,11 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " option menu
     call quickui#menu#install("&Option", [
-                \ [ "Toggle &Number\t(F5)", ':call ToggleNumber()' ],
+                \ [ "Set &Number\t(F5)", ':call ToggleNumber()' ],
                 \ [ "Set &Paste %{&paste? '(On)':'(Off)'}\t(F2)", ':call TogglePasteMode()' ],
-                \ [ 'Set &CursorLine %{&cursorline? "(Off)":"(On)"}', 'set cursorline!' ],
+                \ [ 'Set &CursorLine %{&cursorline? "(On)":"(Off)"}', 'set cursorline!' ],
                 \ [ 'Set L&ist %{&list? "(On)":"(Off)"}', 'set list!' ],
+                \ [ 'Set &Wrap %{&wrap? "(Off)":"(On)"}', 'set wrap!' ],
                 \ [ 'Set &Spell %{&spell? "(Off)":"(On)"}', 'set spell!' ],
                 \ [  "--", '' ],
                 \ [ "Mouse &Disable \t(F10)", 'set mouse=' ],
