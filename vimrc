@@ -502,6 +502,18 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 "Ack选项
     let g:ack_default_options = " -s -H --nocolor --nogroup --column --ignore-file=is:tags --ignore-file=ext:taghl --ignore-file=ext:out"
 
+    " Location of the ack utility
+    if !exists("g:ackprg")
+      if executable('ack-grep')
+        let g:ackprg = "ack-grep"
+      elseif executable('ack')
+        let g:ackprg = "ack"
+      else
+        let g:ackprg = "~/.vim/tools/ack-v3.6.0"
+      endif
+      let g:ackprg .= g:ack_default_options
+    endif
+
 "Tagbar配置
     let g:tagbar_width=26
     let g:tagbar_autofocus = 1
