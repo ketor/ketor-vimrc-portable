@@ -1206,7 +1206,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " view menu
     call quickui#menu#install("&View", [
-                \ [ "&NerdTree\t(F2)", ':NERDTreeToggle' ],
+                \ [ "&NerdTree\t(F3)", ':NERDTreeToggle' ],
                 \ [ "&Tagbar\t(F4)", ':TagbarToggle' ],
                 \ [ "--", '' ],
                 \ [ "&Undotree\t(F8)", ':UndotreeToggle' ],
