@@ -18,22 +18,23 @@
 "     for MS-DOS and Win32:  $VIM\_vimrc
 "     for OpenVMS:  sys$login:.vimrc
 "
-" +--------+-------+---------------------+
-" | Ctrl   | Func  | Function            |
-" +--------+-------+---------------------+
-" | <C-_>2 | F2    | paste模式开关       |
-" | <C-_>3 | F3    | NerdTREE开关        |
-" | <C-_>4 | F4    | tagbar开关          |
-" | <C-_>5 | F5    | 行号模式切换        |
-" | <C-_>6 | F6    | 是否显示特殊字符    |
-" | <C-_>7 | F7    | 更新ctags等文件     |
-" | <C-_>8 | F8    | 打开undotree        |
-" | <C-_>9 | F9    | 进入MultiCursor模式 |
-" | <C-_>y | F10   | 打开YankRing剪贴板  |
-" | <C-_>m | F12   | 鼠标模式切换        |
-" | <C-c>  |       | 快速推出VIM(:qall!) |
-" | <C-_>o |       | 切换cscope热键模式  |
-" +--------+-------+---------------------+
+" +----------------+---------+---------------------+
+" | HotKey1        | HotKey2 | Function            |
+" +----------------+---------+---------------------+
+" | <space><space> |         | 打开Menu菜单        |
+" | <C-_>2         | F2      | paste模式开关       |
+" | <C-_>3         | F3      | NerdTREE开关        |
+" | <C-_>4         | F4      | tagbar开关          |
+" | <C-_>5         | F5      | 行号模式切换        |
+" | <C-_>6         | F6      | 是否显示特殊字符    |
+" | <C-_>7         | F7      | 更新ctags等文件     |
+" | <C-_>8         | F8      | 打开undotree        |
+" | <C-_>9         | F9      | 进入MultiCursor模式 |
+" | <C-_>y         | F10     | 打开YankRing剪贴板  |
+" | <C-_>m         | F12     | 鼠标模式切换        |
+" | <C-c>          |         | 快速推出VIM(:qall!) |
+" | <C-_>o         |         | 切换cscope热键模式  |
+" +----------------+---------+---------------------+
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -176,6 +177,7 @@ fun! TogglePasteMode()
 
     if s:old_pastemode == "0"
         let s:old_pastemode = "1"
+        set showbreak=↪ " 显示换行符
         set number
         set nopaste
         :EnableWhitespace
@@ -194,6 +196,7 @@ fun! TogglePasteMode()
         call MsgBox("set edit mode OK")
     else
         let s:old_pastemode = "0"
+        set showbreak=
         set nonumber
         set norelativenumber
         set paste
@@ -1232,12 +1235,12 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "Toggle &Number\t(F5)", ':call ToggleNumber()' ],
                 \ [ "Set &Paste %{&paste? '(On)':'(Off)'}\t(F2)", ':call TogglePasteMode()' ],
                 \ [ 'Set &CursorLine %{&cursorline? "(Off)":"(On)"}', 'set cursorline!' ],
-                \ [ 'Set L&ist %{&list? "(Off)":"(On)"}', 'set list!' ],
+                \ [ 'Set L&ist %{&list? "(On)":"(Off)"}', 'set list!' ],
+                \ [ 'Set &Spell %{&spell? "(Off)":"(On)"}', 'set spell!' ],
                 \ [  "--", '' ],
                 \ [ "Mouse &Disable \t(F10)", 'set mouse=' ],
                 \ [ "Mouse &Enable \t(F10)", 'set mouse=a' ],
                 \ [  "--", '' ],
-                \ [ 'Set &Spell %{&spell? "(Off)":"(On)"}', 'set spell!' ],
                 \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
                 \ ])
 
