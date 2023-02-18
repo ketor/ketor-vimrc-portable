@@ -304,6 +304,19 @@ fun! ToggleMouse()
     endif
 endfunction
 
+"UpdateTime 切换
+fun! ToggleUpdatetime()
+    if &updatetime == 4000
+        let &updatetime = 300
+        echo "Updatetime is (" . &updatetime . ")"
+        call MsgBox("updatetime is for Vim (" . &updatetime . ")")
+    else
+        let &updatetime = 4000
+        echo "Updatetime is (" . &updatetime . ")"
+        call MsgBox("updatetime is for Vim (" . &updatetime . ")")
+    endif
+endfunction
+
 "开关YankRing剪贴板缓冲区
 nnoremap <F10> :YRShow<CR>
 nnoremap <C-_>y :YRShow<CR>
@@ -1232,15 +1245,15 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " option menu
     call quickui#menu#install("&Option", [
-                \ [ "Set &Number\t(F5)", ':call ToggleNumber()' ],
+                \ [ "Set &Number %{&number? '(On)':'(Off)'}\t(F5)", ':call ToggleNumber()' ],
                 \ [ "Set &Paste %{&paste? '(On)':'(Off)'}\t(F2)", ':call TogglePasteMode()' ],
                 \ [ 'Set &CursorLine %{&cursorline? "(On)":"(Off)"}', 'set cursorline!' ],
                 \ [ 'Set L&ist %{&list? "(On)":"(Off)"}', 'set list!' ],
-                \ [ 'Set &Wrap %{&wrap? "(Off)":"(On)"}', 'set wrap!' ],
-                \ [ 'Set &Spell %{&spell? "(Off)":"(On)"}', 'set spell!' ],
+                \ [ 'Set &Wrap %{&wrap? "(On)":"(Off)"}', 'set wrap!' ],
+                \ [ 'Set &Spell %{&spell? "(On)":"(Off)"}', 'set spell!' ],
                 \ [  "--", '' ],
-                \ [ "Mouse &Disable \t(F10)", 'set mouse=' ],
-                \ [ "Mouse &Enable \t(F10)", 'set mouse=a' ],
+                \ [ 'Toggle &Gitgutter boost %{&updatetime==4000? "(Off)":"(On)"}', ':call ToggleUpdatetime()' ],
+                \ [ 'Toggle &Mouse %{&mouse==""? "(Off)":"(On)"}', ':call ToggleMouse()' ],
                 \ [  "--", '' ],
                 \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
                 \ ])
