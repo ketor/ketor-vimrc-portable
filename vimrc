@@ -1068,6 +1068,9 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:gitgutter_eager = 0
 
 "vim-gutentags
+    " gutentags仅支持Universal Ctags, 不支持Exuberant Ctags.
+    " 因此centos系统一般需要再单独编译安装universal-ctags
+    " https://github.com/universal-ctags/ctags
     " gutentags 搜索工程目录的标志，当前文件路径向上递归直到碰到这些文件/目录名
     " 默认人工指定需要自动生成tags的目录
     let g:gutentags_add_default_project_roots = 0
