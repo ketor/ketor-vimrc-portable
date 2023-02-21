@@ -1277,7 +1277,17 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " hotkey menu
     call quickui#menu#install("Hot&Key", [
-                \ [ "-- CtrlP(OK) --\t(<space>)", '' ],
+                \ [ "-- YCM --\t(<leader>)", '' ],
+                \ [ "GetDoc\t(yc)", ':YcmCompleter GetDoc' ],
+                \ [ "FixIt\t(yf)", ':YcmCompleter FixIt' ],
+                \ [ "GoToInclude\t(yi)", ':YcmCompleter GoToInclude' ],
+                \ [ "GetType\t(yt)", ':YcmCompleter GetType' ],
+                \ [ "GoTo\t(jj)", ':YcmCompleter GoTo' ],
+                \ [ "GoToDefinitionElseDeclaration\t(jd)", ':YcmCompleter GoToDefinitionElseDeclaration' ],
+                \ [ "GoToReferences\t(jr)", ':YcmCompleter GoToReferences' ],
+                \ [ "GoToImplementation\t(ji)", ':YcmCompleter GoToImplementation' ],
+                \ [ "GoToCallers\t(jc)", ':YcmCompleter GoToCallers' ],
+                \ [ "-- CtrlP --\t(<space>)", '' ],
                 \ [ "CtrlPMixed\t(m)", ':CtrlPMixed' ],
                 \ [ "CtrlP\t(f)", ':CtrlP' ],
                 \ [ "CtrlPBuffer\t(b)", ':CtrlPBuffer' ],
@@ -1291,16 +1301,8 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "file\t(f)", '' ],
                 \ [ "includes\t(i)", '' ],
                 \ [ "called\t(d)", '' ],
-                \ [ "-- YCM --\t(<leader>)", '' ],
-                \ [ "GetDoc\t(yc)", '' ],
-                \ [ "GoToInclude\t(yf)", '' ],
-                \ [ "GetType\t(yt)", '' ],
-                \ [ "GoTo\t(jj)", '' ],
-                \ [ "GoToDefinitionElseDeclaration\t(jd)", '' ],
-                \ [ "GoToReferences\t(jr)", '' ],
-                \ [ "GoToImplementation\t(ji)", '' ],
-                \ [ "GoToCallers\t(jc)", '' ],
                 \ ])
+
 
     " help menu
     call quickui#menu#install('&Help', [
