@@ -1097,7 +1097,8 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 
     " 如果使用 universal ctags 需要增加下面一行，老的 Exuberant-ctags 不能加下一行
-    let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+    " 使用universal-ctags在Linux和macOS下不加这个参数是可以work的，Windows需要uncomment这一行配置
+    " let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
 
     " 禁用 gutentags 自动加载 gtags 数据库的行为
     " let g:gutentags_auto_add_gtags_cscope = 0
