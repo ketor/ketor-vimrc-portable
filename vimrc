@@ -1112,6 +1112,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
       let g:gutentags_ctags_extra_args += ['--extras=+q', '--output-format=e-ctags']
     endif
 
+    "Enable advanced commands: GutentagsToggleEnabled GutentagsToggleTrace, etc.
+    let g:gutentags_define_advanced_commands = 1
+    " let g:gutentags_trace = 0
+
 "gutentags_plus
     " change focus to quickfix window after search (optional).
     let g:gutentags_plus_switch = 1
