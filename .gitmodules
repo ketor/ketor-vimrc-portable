@@ -136,3 +136,9 @@
 [submodule "bundle/vim-quickui"]
 	path = bundle/vim-quickui
 	url = https://github.com/skywind3000/vim-quickui
+[submodule "bundle/vim-auto-popmenu"]
+	path = bundle/vim-auto-popmenu
+	url = https://github.com/skywind3000/vim-auto-popmenu/
+[submodule "bundle/vim-dict"]
+	path = bundle/vim-dict
+	url = https://github.com/skywind3000/vim-dict

@@ -47,6 +47,19 @@ if filereadable(expand("$HOME/.vim/bundle/YouCompleteMe/vimrc_ycm_minimal"))
 
     "使用 ctrl+z 激活语义补全
     let g:ycm_key_invoke_completion = '<c-z>'
+
+    "skywind3000/vim-auto-popmenu
+    " enable this plugin for filetypes, '*' for all files.
+    let g:apc_enable_ft = {'text':1, 'markdown':1, 'php':1}
+
+    " source for dictionary, current or other loaded buffers, see ':help cpt'
+    set cpt=.,k,w,b
+
+    " don't select the first item.
+    set completeopt=menu,menuone,noselect
+
+    " suppress annoy messages.
+    set shortmess+=c
 else
     let g:my_complete_plugin = "neocomplcache"
 
@@ -59,7 +72,8 @@ else
     " Use smartcase.
     let g:neocomplcache_enable_smart_case = 1
     " Set minimum syntax keyword length.
-    let g:neocomplcache_min_syntax_length = 3
+    let g:neocomplcache_min_syntax_length = 2
+    let g:neocomplcache_min_keyword_lengt = 2
     let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
     " Enable heavy features.
@@ -68,12 +82,51 @@ else
     " Use underbar completion.
     "let g:neocomplcache_enable_underbar_completion = 1
 
-    " Define dictionary.
+    " adjio
+    " Use skywind3000/vim-dict
     let g:neocomplcache_dictionary_filetype_lists = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
+        \ 'default'      :  '',
+        \ 'batch'        :  $HOME.'/.vim/bundle/vim-dict/dict/batch.dict',
+        \ 'c'            :  $HOME.'/.vim/bundle/vim-dict/dict/c.dict',
+        \ 'context'      :  $HOME.'/.vim/bundle/vim-dict/dict/context.dict',
+        \ 'cpp'          :  $HOME.'/.vim/bundle/vim-dict/dict/cpp.dict',
+        \ 'cs'           :  $HOME.'/.vim/bundle/vim-dict/dict/cs.dict',
+        \ 'css'          :  $HOME.'/.vim/bundle/vim-dict/dict/css.dict',
+        \ 'css3'         :  $HOME.'/.vim/bundle/vim-dict/dict/css3.dict',
+        \ 'dot'          :  $HOME.'/.vim/bundle/vim-dict/dict/dot.dict',
+        \ 'erlang'       :  $HOME.'/.vim/bundle/vim-dict/dict/erlang.dict',
+        \ 'go'           :  $HOME.'/.vim/bundle/vim-dict/dict/go.dict',
+        \ 'haskell'      :  $HOME.'/.vim/bundle/vim-dict/dict/haskell.dict',
+        \ 'html'         :  $HOME.'/.vim/bundle/vim-dict/dict/html.dict',
+        \ 'java'         :  $HOME.'/.vim/bundle/vim-dict/dict/java.dict',
+        \ 'javascript'   :  $HOME.'/.vim/bundle/vim-dict/dict/javascript.dict',
+        \ 'latex'        :  $HOME.'/.vim/bundle/vim-dict/dict/latex.dict',
+        \ 'less'         :  $HOME.'/.vim/bundle/vim-dict/dict/less.dict',
+        \ 'lua'          :  $HOME.'/.vim/bundle/vim-dict/dict/lua.dict',
+        \ 'make'         :  $HOME.'/.vim/bundle/vim-dict/dict/make.dict',
+        \ 'masm'         :  $HOME.'/.vim/bundle/vim-dict/dict/masm.dict',
+        \ 'matlab'       :  $HOME.'/.vim/bundle/vim-dict/dict/matlab.dict',
+        \ 'node'         :  $HOME.'/.vim/bundle/vim-dict/dict/node.dict',
+        \ 'perl'         :  $HOME.'/.vim/bundle/vim-dict/dict/perl.dict',
+        \ 'php'          :  $HOME.'/.vim/bundle/vim-dict/dict/php.dict',
+        \ 'plaintex'     :  $HOME.'/.vim/bundle/vim-dict/dict/plaintex.dict',
+        \ 'python'       :  $HOME.'/.vim/bundle/vim-dict/dict/python.dict',
+        \ 'ruby'         :  $HOME.'/.vim/bundle/vim-dict/dict/ruby.dict',
+        \ 'rust'         :  $HOME.'/.vim/bundle/vim-dict/dict/rust.dict',
+        \ 'scala'        :  $HOME.'/.vim/bundle/vim-dict/dict/scala.dict',
+        \ 'scss'         :  $HOME.'/.vim/bundle/vim-dict/dict/scss.dict',
+        \ 'sh'           :  $HOME.'/.vim/bundle/vim-dict/dict/sh.dict',
+        \ 'snippet'      :  $HOME.'/.vim/bundle/vim-dict/dict/snippet.dict',
+        \ 'tex'          :  $HOME.'/.vim/bundle/vim-dict/dict/tex.dict',
+        \ 'text'         :  $HOME.'/.vim/bundle/vim-dict/dict/text.dict',
+        \ 'verilog'      :  $HOME.'/.vim/bundle/vim-dict/dict/verilog.dict',
+        \ 'vim'          :  $HOME.'/.vim/bundle/vim-dict/dict/vim.dict',
+        \ 'wiki'         :  $HOME.'/.vim/bundle/vim-dict/dict/wiki.dict',
+        \ 'word'         :  $HOME.'/.vim/bundle/vim-dict/dict/word.dict',
+        \ 'xhtml'        :  $HOME.'/.vim/bundle/vim-dict/dict/xhtml.dict',
+        \ 'xslt'         :  $HOME.'/.vim/bundle/vim-dict/dict/xslt.dict',
+        \ 'zsh'          :  $HOME.'/.vim/bundle/vim-dict/dict/zsh.dict'
+        \ }
 
     " Define keyword.
     if !exists('g:neocomplcache_keyword_patterns')
