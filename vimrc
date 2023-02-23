@@ -10,7 +10,7 @@
 "|------------------------|
 "
 " Maintainer:  ketor <https://github.com/ketor/vimrc-min>
-" Last change: 2023.02.16
+" Last change: 2023.02.23
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -1151,15 +1151,15 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     " let g:clang_format#auto_format = 0
 
     " map to <Leader>cf in C++ code
-    autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-    autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+    autocmd FileType c,cpp,objc,proto nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp,objc,proto vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
     " Toggle auto formatting:
     nmap <Leader>C :ClangFormatAutoToggle<CR>
 
     " enable auto format for c,cpp,objc
     if executable("clang-format")
-        autocmd FileType c,cpp,objc ClangFormatAutoEnable
+        autocmd FileType c,cpp,objc,proto ClangFormatAutoEnable
     endif
 
 "vim-quickui
