@@ -47,17 +47,11 @@ apt install build-essential cmake vim-nox python3-dev
 apt install mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm
 apt install global universal-ctags cscope
 apt install vim
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
 ```
 Rocky 8.5+.
 
 ```
 sudo yum install -y cmake gcc-c++ make python3-devel cscope vim ctags golang rust nodejs java-17-openjdk mono-complete ncurses-devel perl clang-tools-extra
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
 ```
 
 # Install
@@ -66,6 +60,9 @@ python3 install.py --all
 
 ```
 bash -c "$( curl https://raw.githubusercontent.com/ketor/ketor-vimrc-portable/master/setup.sh )"
+
+cd ~/.vim/bundle/YouCompleteMe
+python3 install.py --all
 ```
 
 # ShortCuts
