@@ -1270,7 +1270,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ 'Set &Spell %{&spell? "(On)":"(Off)"}', 'set spell!' ],
                 \ [  "--", '' ],
                 \ [ 'Toggle &Gitgutter boost %{&updatetime==4000? "(Off)":"(On)"}', ':call ToggleUpdatetime()' ],
-                \ [ 'Toggle &Mouse %{&mouse==""? "(Off)":"(On)"}', ':call ToggleMouse()' ],
+                \ [ "Toggle &Mouse %{&mouse==''? '(Off)':'(On)'}\t(F5)", ':call ToggleMouse()' ],
                 \ [  "--", '' ],
                 \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
                 \ ])
