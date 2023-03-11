@@ -514,6 +514,18 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
         " ag is fast enough that CtrlP doesn't need to cache
         let g:ctrlp_use_caching = 0
     endif
+    " 按下 Esc 或 <Ctrl-c> 可退出ctrlp，返回到Vim窗口中
+    " 按下 F5 用于刷新当前操作路径下的文件缓存，可以使用命令 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp' 设置缓存文件存放路径
+    " 使用 <Ctrl-k> 和 <Ctrl-j> 在模糊搜索结果列表中上下移动 (当然也可以使用键盘上的上下方向键)
+    " 使用 <Ctrl-f> 和 <Ctrl-b> 在查找文件模式、查找缓冲区模式、查找MRU文件几种模式间进行切换 (cycle between modes)
+    " 使用 <Ctrl-d> 在 路径匹配 和 文件名匹配 之间切换 (switch to filename search instead of full path) ，可以通过设置 let g:ctrlp_by_filename = 1 来设置默认使用 文件名匹配 模式进行模糊搜索
+    " 使用 <Ctrl-r> 在 字符串模式 和 正则表达式模式 之间切换 (switch to regexp mode)
+    " 使用 <Ctrl-t> 在新的Vim标签页中打开文件 (open the selected entry in a new tab)
+    " 使用 <Ctrl-v> 垂直分割窗口打开文件
+    " 使用 <Ctrl-x> 水平分割窗口打开文件
+    " 使用 <Ctrl-p> 或` 选择前或后一条历史记录
+    " <Ctrl-y> 用于当搜索的目标文件不存在时创建文件及父目录 (create a new file and its parent directories)
+    " 使用 <Ctrl-z> 标记或取消标记多个文件， 标记多个文件后可以使用 <Ctrl-o> 同时打开多个文件 (mark/unmark multiple files and to open them)
 
 "Ack选项
     let g:ack_default_options = " -s -H --nocolor --nogroup --column --ignore-file=is:tags --ignore-file=ext:taghl --ignore-file=ext:out"
