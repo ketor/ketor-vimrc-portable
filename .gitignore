@@ -12,3 +12,5 @@ GPATH
 .project
 .cache
 compile_commands.json
+.history
+
