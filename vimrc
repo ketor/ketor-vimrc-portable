@@ -140,7 +140,7 @@ set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.DS_Store                       " OSX bullshit
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.orig                           " Merge resolution files
-set visualbell                                   " flash screen when bell rings
+" set visualbell                                   " flash screen when bell rings
 set cursorline                                   " highline cursor line
 set ttyfast                                      " indicate faster terminal connection
 set laststatus=2                                 " always show status line
