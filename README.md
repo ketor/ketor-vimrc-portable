@@ -191,3 +191,7 @@ The leader key is ','.
     cmake cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     
     bear -- make
+
+- *E197: Cannot set language to "en_US.UTF-8"*
+
+    Please check the /etc/locale.gen file in linux, and uncomment the "en_US.UTF-8 UTF-8" line, then run locale-gen
