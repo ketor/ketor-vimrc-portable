@@ -10,7 +10,7 @@
 "|------------------------|
 "
 " Maintainer:  ketor <https://github.com/ketor/vimrc-min>
-" Last change: 2023.02.23
+" Last change: 2024.05.06
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -39,6 +39,14 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+
+"设置菜单和帮助的语言，默认改为英语
+    set fileencodings=utf-8,gbk "使用utf-8或gbk打开文件
+    set encoding=utf8
+    set langmenu=en_US.UTF-8
+    language message en_US.UTF-8
+    let $LC_ALL='en_US.UTF-8'
+    let $LANG='en_US.UTF-8'
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -412,14 +420,6 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
         "4. syntax 用语法高亮来定义折叠
         "5. diff   对没有更改的文本进行折叠
         "6. marker 用标志折叠
-
-"设置菜单和帮助的语言，默认改为英语
-    set fileencodings=utf-8,gbk "使用utf-8或gbk打开文件
-    set encoding=utf8
-    set langmenu=en_US.UTF-8
-    language message en_US.UTF-8
-    let $LC_ALL='en_US.UTF-8'
-    let $LANG='en_US.UTF-8'
 
 "pathogen是Vim用来管理插件的插件
     source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
