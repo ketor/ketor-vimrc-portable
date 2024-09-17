@@ -10,7 +10,7 @@
 "|------------------------|
 "
 " Maintainer:  ketor <https://github.com/ketor/vimrc-min>
-" Last change: 2024.05.06
+" Last change: 2024.09.18
 "
 " To use it, copy it to
 "     for Unix and OS/2:  ~/.vimrc
@@ -1302,33 +1302,32 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ ])
 
     " hotkey menu
-    call quickui#menu#install("Hot&Key", [
-                \ [ "-- YCM --\t(<leader>)", '' ],
-                \ [ "GetDoc\t(yc)", ':YcmCompleter GetDoc' ],
-                \ [ "FixIt\t(yf)", ':YcmCompleter FixIt' ],
-                \ [ "GoToInclude\t(yi)", ':YcmCompleter GoToInclude' ],
-                \ [ "GetType\t(yt)", ':YcmCompleter GetType' ],
-                \ [ "GoTo\t(jj)", ':YcmCompleter GoTo' ],
-                \ [ "GoToDefinitionElseDeclaration\t(jd)", ':YcmCompleter GoToDefinitionElseDeclaration' ],
-                \ [ "GoToReferences\t(jr)", ':YcmCompleter GoToReferences' ],
-                \ [ "GoToImplementation\t(ji)", ':YcmCompleter GoToImplementation' ],
-                \ [ "GoToCallers\t(jc)", ':YcmCompleter GoToCallers' ],
-                \ [ "-- CtrlP --\t(<space>)", '' ],
-                \ [ "CtrlPMixed\t(m)", ':CtrlPMixed' ],
-                \ [ "CtrlP\t(f)", ':CtrlP' ],
-                \ [ "CtrlPBuffer\t(b)", ':CtrlPBuffer' ],
-                \ [ "\CtrlPTagt(t)", ':CtrlPTag' ],
-                \ [ "-- CSCOPE --\t(<C-_>)", '' ],
-                \ [ "symbol\t(s)", '' ],
-                \ [ "global\t(g)", '' ],
-                \ [ "calls\t(c)", '' ],
-                \ [ "text\t(t)", '' ],
-                \ [ "egrep\t(e)", '' ],
-                \ [ "file\t(f)", '' ],
-                \ [ "includes\t(i)", '' ],
-                \ [ "called\t(d)", '' ],
-                \ ])
-
+    " call quickui#menu#install("Hot&Key", [
+    "             \ [ "-- YCM --\t(<leader>)", '' ],
+    "             \ [ "GetDoc\t(yc)", ':YcmCompleter GetDoc' ],
+    "             \ [ "FixIt\t(yf)", ':YcmCompleter FixIt' ],
+    "             \ [ "GoToInclude\t(yi)", ':YcmCompleter GoToInclude' ],
+    "             \ [ "GetType\t(yt)", ':YcmCompleter GetType' ],
+    "             \ [ "GoTo\t(jj)", ':YcmCompleter GoTo' ],
+    "             \ [ "GoToDefinitionElseDeclaration\t(jd)", ':YcmCompleter GoToDefinitionElseDeclaration' ],
+    "             \ [ "GoToReferences\t(jr)", ':YcmCompleter GoToReferences' ],
+    "             \ [ "GoToImplementation\t(ji)", ':YcmCompleter GoToImplementation' ],
+    "             \ [ "GoToCallers\t(jc)", ':YcmCompleter GoToCallers' ],
+    "             \ [ "-- CtrlP --\t(<space>)", '' ],
+    "             \ [ "CtrlPMixed\t(m)", ':CtrlPMixed' ],
+    "             \ [ "CtrlP\t(f)", ':CtrlP' ],
+    "             \ [ "CtrlPBuffer\t(b)", ':CtrlPBuffer' ],
+    "             \ [ "\CtrlPTagt(t)", ':CtrlPTag' ],
+    "             \ [ "-- CSCOPE --\t(<C-_>)", '' ],
+    "             \ [ "symbol\t(s)", '' ],
+    "             \ [ "global\t(g)", '' ],
+    "             \ [ "calls\t(c)", '' ],
+    "             \ [ "text\t(t)", '' ],
+    "             \ [ "egrep\t(e)", '' ],
+    "             \ [ "file\t(f)", '' ],
+    "             \ [ "includes\t(i)", '' ],
+    "             \ [ "called\t(d)", '' ],
+    "             \ ])
 
     " help menu
     call quickui#menu#install('&Help', [

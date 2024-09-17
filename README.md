@@ -1,6 +1,6 @@
 Best vimrc for ketor, used for C/C++, Python, PHP and Go.
 
-The design principle of ketor vimrc is portable, cross-platform. ketor vimrc is designed running well on Linux and Mac, all plugins is written in vimscript except YouCompleteMe which is optional. And also ketor vimrc can be copied and installed anywhere by just a tarball.
+The design principle of ketor vimrc is portable, cross-platform. ketor vimrc is designed running well on Linux and Mac, all plugins is written in vimscript. And also ketor vimrc can be copied and installed anywhere by just a tarball.
 
 Enjoy it.
 
@@ -19,9 +19,6 @@ Enjoy it.
 brew install cmake go node mono rust python3
 brew install global cscope universal-ctags
 brew install vim
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
 ```
 
 * Mac use MacVim:
@@ -29,9 +26,6 @@ python3 install.py --all
 ```
 brew install cmake go node mono rust python3
 brew install global cscope universal-ctags
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
 ```
 
 Download macvim from [https://github.com/macvim-dev/macvim/releases/latest] and install it to /Applications .
@@ -60,9 +54,6 @@ sudo yum install -y cmake gcc-c++ make python3-devel cscope vim ctags golang rus
 
 ```
 bash -c "$( curl https://raw.githubusercontent.com/ketor/ketor-vimrc-portable/master/setup.sh )"
-
-cd ~/.vim/bundle/YouCompleteMe
-python3 install.py --all
 ```
 
 # ShortCuts
@@ -134,14 +125,6 @@ The leader key is ','.
 
     2) Your terminal util like iterm is also needed to set for xterm-256color too. You need set it yourself too.
 
-- *Install all YouCompleteMe dependencies*
-
-    If you use Mac OS and brew:
-
-    ```
-    brew install cmake go node mono rust
-    ```
-
 - *MacVim Caught deadly signal SEGV*
 
     If you install macvim from brew, when you running mvim, you may seee "Caught deadly signal SEGV".
@@ -152,45 +135,6 @@ The leader key is ','.
 
 
     But after install from [http://macvim-dev.github.io/macvim/], if you also installed python3 on your Mac OS, this MacVim is going to have some new problem of python3.
-
-    To solve this problem, if you want use MacVim with python2.7, just add this config in your ~/.vimrc file:
-
-    ```
-    if has('gui_macvim')
-        let $PYTHONHOME="/usr/local/Frameworks/Python.framework/Versions/2.7"
-    endif
-    ```
-
-    Or if you want use MacVim with python3.6:
-
-    1.Compile YouCompleteMe using python3:
-
-    ```
-    cd ~/.vim/bundle/YouCompleteMe
-    python3 ./install.py --all
-    ```
-
-    2.Add this config in your ~/.vimrc file:
-
-    ```
-    if has('gui_macvim')
-        let $PYTHONHOME="/usr/local/Frameworks/Python.framework/Versions/3.6"
-    endif
-    ```
-
-    The PYTHONHOME dir is like:
-    ```
-    Headers   Python    Resources bin       include   lib       share
-    ```
-- *How install YouCompleteMe using root user*
-
-    Add --force-sudo parameter.
-
-- *How to generate compile_commands.json*
-
-    cmake cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-    
-    bear -- make
 
 - *E197: Cannot set language to "en_US.UTF-8"*
 

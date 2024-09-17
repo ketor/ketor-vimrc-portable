@@ -118,9 +118,6 @@
 [submodule "bundle/vim-gutentags"]
 	path = bundle/vim-gutentags
 	url = https://github.com/ludovicchabant/vim-gutentags.git
-[submodule "bundle/YouCompleteMe"]
-	path = bundle/YouCompleteMe
-	url = https://github.com/ycm-core/YouCompleteMe
 [submodule "bundle/gutentags_plus"]
 	path = bundle/gutentags_plus
 	url = https://github.com/skywind3000/gutentags_plus
