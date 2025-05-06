@@ -606,6 +606,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     nnoremap <Leader>gd :Git diff<CR>
 
 "vim-go & gotags config
+    let g:go_version_warning = 0
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
     let g:go_highlight_structs = 1
