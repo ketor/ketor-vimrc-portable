@@ -851,6 +851,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:yankring_max_history=512
     let g:yankring_replace_n_pkey = '<leader>['
     let g:yankring_replace_n_nkey = '<leader>]'
+    let g:yankring_max_element_length = 20971520
 
 "gv.vim 查看gitlog
     nnoremap <Leader>gl :GV<CR>
