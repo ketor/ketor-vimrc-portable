@@ -134,7 +134,7 @@ set history=1024
 set number                                       " 显示行号
 set autoread                                     " 文件在Vim之外修改过，自动重新读入
 set showbreak=↪                                  " 显示换行符
-set completeopt=longest,menu                     " 更好的insert模式自动完成
+set completeopt=menuone,noinsert,noselect         " asyncomplete需要的补全选项
 set modeline                                     " 允许被编辑的文件以注释的形式设置Vim选项
 set hidden                                       " switching buffers without saving
 set ruler                                        " show the cursor position all the time
@@ -168,23 +168,30 @@ set fillchars=diff:⣿
 set backupskip=/tmp/*,/private/tmp/*"
 
 " Resize splits when the window is resized
-au VimResized * :wincmd =
+augroup VimResize
+    au!
+    au VimResized * :wincmd =
+augroup END
 
 " use vim-quickui to display message in the textbox
 function! MsgBox(content)
-    let question = a:content
-    let choices = "&OK\n&Cancel"
-    let choice = quickui#confirm#open(question, choices, 1, 'MessageBox')
+    if exists('*quickui#confirm#open')
+        let question = a:content
+        let choices = "&OK\n&Cancel"
+        let choice = quickui#confirm#open(question, choices, 1, 'MessageBox')
+    else
+        echo a:content
+    endif
 endfunc
 
 "开关复制模式
 fun! TogglePasteMode()
     if !exists("s:old_pastemode")
-        let s:old_pastemode = "1"
+        let s:old_pastemode = 1
     endif
 
-    if s:old_pastemode == "0"
-        let s:old_pastemode = "1"
+    if s:old_pastemode == 0
+        let s:old_pastemode = 1
         set showbreak=↪ " 显示换行符
         set number
         set nopaste
@@ -203,7 +210,7 @@ fun! TogglePasteMode()
         echo "set edit mode"
         call MsgBox("set edit mode OK")
     else
-        let s:old_pastemode = "0"
+        let s:old_pastemode = 0
         set showbreak=
         set nonumber
         set norelativenumber
@@ -341,10 +348,13 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message
-    au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup GitCommitPos
+        au!
+        au FileType gitcommit au BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+    augroup END
 
-"快速退出vim
-    nnoremap <C-c> :qall!<CR>
+"快速退出vim(需要连按两次Ctrl-C确认)
+    nnoremap <C-c> :confirm qall<CR>
 
 "搜索相关的设置
     set showmatch  " show matching brackets/parenthesis
@@ -376,18 +386,18 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 "Code View Mode
     fun! ToggleCodeViewMode()
         if !exists("s:codeviewmode")
-            let s:codeviewmode = "0"
+            let s:codeviewmode = 0
         endif
 
-        if s:codeviewmode == "0"
+        if s:codeviewmode == 0
             nmap j jzz
             nmap k kzz
-            let s:codeviewmode = "1"
+            let s:codeviewmode = 1
             echo "Code View Mode"
         else
             unmap j
             unmap k
-            let s:codeviewmode = "0"
+            let s:codeviewmode = 0
             echo "Code Edit Mode"
         endif
     endfunction
@@ -422,8 +432,9 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
         "6. marker 用标志折叠
 
 "pathogen是Vim用来管理插件的插件
-    source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
-    execute pathogen#infect('bundle/{}', '~/.vim/bundle/{}')
+    let s:vim_home = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+    execute 'source ' . s:vim_home . '/bundle/vim-pathogen/autoload/pathogen.vim'
+    execute pathogen#infect('bundle/{}', s:vim_home . '/bundle/{}')
 
 "colorscheme配色方案配置
     "Config of colorscheme is in $HOME/.vimrc
@@ -435,6 +446,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     let g:airline#extensions#whitespace#enabled = 0
     let g:airline#extensions#whitespace#symbol = '!'
     let g:airline#extensions#syntastic#enabled = 0
+    let g:airline#extensions#lsp#enabled = 1
     let g:airline#extensions#branch#enabled = 1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -537,7 +549,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
       elseif executable('ack')
         let g:ackprg = "ack"
       else
-        let g:ackprg = "~/.vim/tools/ack-v3.6.0"
+        let g:ackprg = s:vim_home . "/tools/ack-v3.6.0"
       endif
       let g:ackprg .= g:ack_default_options
     endif
@@ -606,6 +618,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     nnoremap <Leader>gd :Git diff<CR>
 
 "vim-go & gotags config
+    " Disable vim-go's LSP features to avoid conflict with vim-lsp
+    let g:go_gopls_enabled = 0
+    let g:go_def_mapping_enabled = 0
+    let g:go_doc_keywordprg_enabled = 0
     let g:go_version_warning = 0
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
@@ -619,10 +635,13 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     let g:go_fmt_autosave = 1
 
-    au FileType go nmap <leader>r <Plug>(go-run)
-    au FileType go nmap <leader>b <Plug>(go-build)
-    au FileType go nmap <leader>t <Plug>(go-test)
-    au FileType go nmap <leader>c <Plug>(go-coverage)
+    augroup GoMappings
+        au!
+        au FileType go nmap <leader>r <Plug>(go-run)
+        au FileType go nmap <leader>b <Plug>(go-build)
+        au FileType go nmap <leader>t <Plug>(go-test)
+        au FileType go nmap <leader>c <Plug>(go-coverage)
+    augroup END
     let g:tagbar_type_go = {
         \ 'ctagstype' : 'go',
         \ 'kinds'     : [
@@ -652,7 +671,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     \ }
 
 "CompletePlugin
-    source ~/.vim/vimrc-completeplugin.vim
+    execute 'source ' . s:vim_home . '/vimrc-completeplugin.vim'
 
 "neosnippet
     " Plugin key-mappings.
@@ -735,19 +754,14 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
 "vim-multiple-cursors
     " Called once right before you start selecting multiple cursors
-    " Only use with neocomplcache
-    if g:my_complete_plugin == "neocomplcache"
+    if g:my_complete_plugin == "asyncomplete"
         function! Multiple_cursors_before()
-          if exists(':NeoComplCacheLock')==2
-            exe 'NeoComplCacheLock'
-          endif
+            let g:asyncomplete_auto_popup = 0
         endfunction
 
         " Called once only when the multiple selection is canceled (default <Esc>)
         function! Multiple_cursors_after()
-          if exists(':NeoComplCacheUnlock')==2
-            exe 'NeoComplCacheUnlock'
-          endif
+            let g:asyncomplete_auto_popup = 1
         endfunction
     endif
 
@@ -791,8 +805,11 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
 "vim-better-whitespace
     "need this hack code to make everything OK now
-    autocmd VimEnter * DisableWhitespace
-    autocmd VimEnter * EnableWhitespace
+    augroup BetterWhitespace
+        au!
+        autocmd VimEnter * DisableWhitespace
+        autocmd VimEnter * EnableWhitespace
+    augroup END
     map <leader><space> :StripWhitespace<CR>
 
 "indentLine
@@ -1165,16 +1182,18 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     " let g:clang_format#auto_format = 0
 
     " map to <Leader>cf in C++ code
-    autocmd FileType c,cpp,objc,proto nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-    autocmd FileType c,cpp,objc,proto vnoremap <buffer><Leader>cf :ClangFormat<CR>
+    augroup ClangFormatGroup
+        au!
+        autocmd FileType c,cpp,objc,proto nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+        autocmd FileType c,cpp,objc,proto vnoremap <buffer><Leader>cf :ClangFormat<CR>
+        " enable auto format for c,cpp,objc
+        if executable("clang-format")
+            autocmd FileType c,cpp,objc,proto ClangFormatAutoEnable
+        endif
+    augroup END
 
     " Toggle auto formatting:
     nmap <Leader>C :ClangFormatAutoToggle<CR>
-
-    " enable auto format for c,cpp,objc
-    if executable("clang-format")
-        autocmd FileType c,cpp,objc,proto ClangFormatAutoEnable
-    endif
 
 "vim-quickui
     " If you have many items in the quickfix window, instead of open them one by one, you are able to press p in the quickfix window and preview them in the popup
@@ -1301,6 +1320,24 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "Git &move\t(<leader>gm)", ':Gmove' ],
                 \ [ "Git &read\t(<leader>gp)", ':Gread' ],
                 \ [ "Git git\t(<leader>gg)", ':Git' ],
+                \ ])
+
+    " LSP menu
+    call quickui#menu#install("&LSP", [
+                \ [ "LSP &Status", ':LspStatus' ],
+                \ [ "LSP &Install Server", ':LspInstallServer' ],
+                \ [ "--", '' ],
+                \ [ "&Definition\t(gd)", ':LspDefinition' ],
+                \ [ "&References\t(gr)", ':LspReferences' ],
+                \ [ "&Implementation\t(gi)", ':LspImplementation' ],
+                \ [ "&Hover\t(K)", ':LspHover' ],
+                \ [ "Re&name\t(<leader>rn)", ':LspRename' ],
+                \ [ "--", '' ],
+                \ [ "Next &Diagnostic\t(]g)", ':LspNextDiagnostic' ],
+                \ [ "Prev Diagnosti&c\t([g)", ':LspPreviousDiagnostic' ],
+                \ [ "Document D&iagnostics", ':LspDocumentDiagnostics' ],
+                \ [ "--", '' ],
+                \ [ "Sto&p Server", ':LspStopServer' ],
                 \ ])
 
     " hotkey menu

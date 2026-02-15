@@ -4,9 +4,6 @@
 [submodule "bundle/ack.vim"]
 	path = bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim
-[submodule "bundle/ag.vim"]
-	path = bundle/ag.vim
-	url = https://github.com/rking/ag.vim
 [submodule "bundle/jellybeans.vim"]
 	path = bundle/jellybeans.vim
 	url = https://github.com/nanotech/jellybeans.vim
@@ -103,9 +100,6 @@
 [submodule "bundle/vim-snippets"]
 	path = bundle/vim-snippets
 	url = https://github.com/honza/vim-snippets
-[submodule "bundle/neocomplcache.vim"]
-	path = bundle/neocomplcache.vim
-	url = https://github.com/Shougo/neocomplcache.vim
 [submodule "bundle/vim-commentary"]
 	path = bundle/vim-commentary
 	url = https://github.com/tpope/vim-commentary
@@ -130,12 +124,30 @@
 [submodule "bundle/vim-quickui"]
 	path = bundle/vim-quickui
 	url = https://github.com/skywind3000/vim-quickui
-[submodule "bundle/vim-auto-popmenu"]
-	path = bundle/vim-auto-popmenu
-	url = https://github.com/skywind3000/vim-auto-popmenu/
 [submodule "bundle/vim-dict"]
 	path = bundle/vim-dict
 	url = https://github.com/skywind3000/vim-dict
 [submodule "bundle/ctrlp.vim"]
 	path = bundle/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim
+[submodule "bundle/vim-lsp"]
+	path = bundle/vim-lsp
+	url = https://github.com/prabirshrestha/vim-lsp
+[submodule "bundle/asyncomplete.vim"]
+	path = bundle/asyncomplete.vim
+	url = https://github.com/prabirshrestha/asyncomplete.vim
+[submodule "bundle/asyncomplete-lsp.vim"]
+	path = bundle/asyncomplete-lsp.vim
+	url = https://github.com/prabirshrestha/asyncomplete-lsp.vim
+[submodule "bundle/vim-lsp-settings"]
+	path = bundle/vim-lsp-settings
+	url = https://github.com/mattn/vim-lsp-settings
+[submodule "bundle/asyncomplete-buffer.vim"]
+	path = bundle/asyncomplete-buffer.vim
+	url = https://github.com/prabirshrestha/asyncomplete-buffer.vim
+[submodule "bundle/asyncomplete-file.vim"]
+	path = bundle/asyncomplete-file.vim
+	url = https://github.com/prabirshrestha/asyncomplete-file.vim
+[submodule "bundle/asyncomplete-neosnippet.vim"]
+	path = bundle/asyncomplete-neosnippet.vim
+	url = https://github.com/prabirshrestha/asyncomplete-neosnippet.vim
