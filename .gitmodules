@@ -39,7 +39,7 @@
 	url = https://github.com/vim-airline/vim-airline-themes
 [submodule "bundle/vim-visual-multi"]
 	path = bundle/vim-visual-multi
-	url = https://github.com/mg979/vim-visual-multi
+	url = https://github.com/mg979/vim-visual-multi.git
 [submodule "bundle/vim-expand-region"]
 	path = bundle/vim-expand-region
 	url = https://github.com/terryma/vim-expand-region
