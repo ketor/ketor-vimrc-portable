@@ -1252,6 +1252,10 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&Save", ':w'],
                 \ [ "Save &All", ':wa' ],
                 \ [ "--", '' ],
+                \ [ "&Open File\t(\u003cspace\u003ef)", ':CtrlP' ],
+                \ [ "Open &Buffer\t(\u003cspace\u003eb)", ':CtrlPBuffer' ],
+                \ [ "Open &Mixed\t(\u003cspace\u003em)", ':CtrlPMixed' ],
+                \ [ "--", '' ],
                 \ [ "Sav&e Exit", ':wqall' ],
                 \ [ "Force E&xit", ':qall!' ],
                 \ ])
@@ -1259,10 +1263,16 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
     " edit menu
     call quickui#menu#install('&Edit', [
                 \ [ '&Find', ':call SearchBox()' ],
-                \ [ '&Clear Highlight', ':nohlsearch' ],
+                \ [ '&Clear Highlight\t(<leader>/)', ':nohlsearch' ],
                 \ [ "--", '' ],
                 \ [ "ClangFor&mat\t(<leader>cf)", ':ClangFormat' ],
-                \ [ "Generate &Tags\t(<C-_>7)", ':call UpdateCtagsCscopeGtags()' ],
+                \ [ "To&ggle Comment\t(<leader>c<space>)", ':Commentary' ],
+                \ [ "--", '' ],
+                \ [ "&Hex Mode", ':Hex' ],
+                \ [ "&Ascii Mode", ':Asc' ],
+                \ [ "--", '' ],
+                \ [ "Generate &Tags\t(F7)", ':call UpdateCtagsCscopeGtags()' ],
+                \ [ "Clean Tags", ':Cleantags' ],
                 \ ])
 
     " view menu
@@ -1271,6 +1281,7 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "&Tagbar\t(F4)", ':TagbarToggle' ],
                 \ [ "--", '' ],
                 \ [ "&Undotree\t(F8)", ':UndotreeToggle' ],
+                \ [ "Multi-Cursor Mode\t(F9)", ':call vm#commands#find_under(0, 0)' ],
                 \ [ "&YankRing\t(F10)", ':YRShow' ],
                 \ ])
 
@@ -1290,17 +1301,31 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
 
     " option menu
     call quickui#menu#install("&Option", [
-                \ [ "Set &Number %{&number? '(On)':'(Off)'}\t(F5)", ':call ToggleNumber()' ],
                 \ [ "Set &Paste %{&paste? '(On)':'(Off)'}\t(F2)", ':call TogglePasteMode()' ],
+                \ [ "Set &Number %{&number? '(On)':'(Off)'}\t(F5)", ':call ToggleNumber()' ],
+                \ [ 'Set L&ist %{&list? "(On)":"(Off)"}\t(F6)', 'set list!' ],
                 \ [ 'Set &CursorLine %{&cursorline? "(On)":"(Off)"}', 'set cursorline!' ],
-                \ [ 'Set L&ist %{&list? "(On)":"(Off)"}', 'set list!' ],
                 \ [ 'Set &Wrap %{&wrap? "(On)":"(Off)"}', 'set wrap!' ],
                 \ [ 'Set &Spell %{&spell? "(On)":"(Off)"}', 'set spell!' ],
                 \ [  "--", '' ],
                 \ [ 'Toggle &Gitgutter boost %{&updatetime==4000? "(Off)":"(On)"}', ':call ToggleUpdatetime()' ],
-                \ [ "Toggle &Mouse %{&mouse==''? '(Off)':'(On)'}\t(F5)", ':call ToggleMouse()' ],
+                \ [ "Toggle &Mouse %{&mouse==''? '(Off)':'(On)'}\t(F12)", ':call ToggleMouse()' ],
                 \ [  "--", '' ],
-                \ [ 'Toggle Cscope &Keymap', 'call ToggleCscopeKeymap()' ],
+                \ [ 'Toggle Cscope &Keymap\t(<C-_>o)', ':call ToggleCscopeKeymap()' ],
+                \ ])
+
+    " tools menu
+    call quickui#menu#install("&Tools", [
+                \ [ "&Generate Ctags", ':Ctags' ],
+                \ [ "Generate &Gtags", ':Gtags' ],
+                \ [ "Generate C&scope", ':Cscope' ],
+                \ [ "Generate &Go tags", ':Gotags' ],
+                \ [ "Generate &Php tags", ':Phptags' ],
+                \ [ "--", '' ],
+                \ [ "Update All Tags\t(F7)", ':call UpdateCtagsCscopeGtags()' ],
+                \ [ "&Clean All Tags", ':Cleantags' ],
+                \ [ "--", '' ],
+                \ [ "Clear &Swap Files", ':Cswp' ],
                 \ ])
 
     " git menu
@@ -1315,6 +1340,20 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
                 \ [ "Git &move\t(<leader>gm)", ':Gmove' ],
                 \ [ "Git &read\t(<leader>gp)", ':Gread' ],
                 \ [ "Git git\t(<leader>gg)", ':Git' ],
+                \ ])
+
+    " cscope menu
+    call quickui#menu#install("&Cscope", [
+                \ [ "Find &Symbol\t(<C-_>s)", ':cs find s <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "Find &Global Def\t(<C-_>g)", ':cs find g <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "Find &Calls To\t(<C-_>c)", ':cs find c <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "Find &Text\t(<C-_>t)", ':cs find t <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "Find &Egrep\t(<C-_>e)", ':cs find e <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "Find &File\t(<C-_>f)", ':cs find f <C-R>=expand("<cfile>")<CR><CR>' ],
+                \ [ "Find &Includes\t(<C-_>i)", ':cs find i <C-R>=expand("<cfile>")<CR><CR>' ],
+                \ [ "Find &Called\t(<C-_>d)", ':cs find d <C-R>=expand("<cword>")<CR><CR>' ],
+                \ [ "--", '' ],
+                \ [ "Toggle Keymap Mode\t(<C-_>o)", ':call ToggleCscopeKeymap()' ],
                 \ ])
 
     " LSP menu

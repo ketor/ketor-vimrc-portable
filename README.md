@@ -67,14 +67,32 @@ bash -c "$( curl https://raw.githubusercontent.com/ketor/ketor-vimrc-portable/ma
 | F6             | Whether or not show listchar                        |
 | F7             | Update ctags                                        |
 | F8             | Open undotree                                       |
-| F9             | Enter multi-cursor-mode                             |
-| F10            | Enter Rankring clipboard                            |
+| F9             | Enter multi-cursor-mode (vim-visual-multi)          |
+| F10            | Enter YankRing clipboard                            |
 | F12            | Mouse mode switch (mouse=a/-a)                      |
-| SpaceSpace     | Activate CtrlP Mixed Search                         |
+| SpaceSpace     | Open QuickUI Menu                                   |
+| Ctrl+_ p       | Preview tag in popup                                |
 | Ctrl+h/j/k/l   | Switch between windows.                             |
 | Ctrl+c         | Completely quit vim without saving                  |
 
 The leader key is ','.
+
+# QuickUI Menu
+
+Press `<Space><Space>` to open the QuickUI menu. The menu includes:
+
+| Menu     | Contents                                          |
+|----------|---------------------------------------------------|
+| File     | New/Close Tab, Save, Open Files (CtrlP)          |
+| Edit     | Find, ClangFormat, Hex/Asc Mode, Generate Tags   |
+| View     | NerdTree, Tagbar, Undotree, Multi-Cursor, YankRing |
+| Window   | Buffer/Function List, Terminal, QuickFix         |
+| Option   | Toggle Paste/Number/List/Mouse mode              |
+| Tools    | Generate Ctags/Gtags/Cscope, Clean Tags          |
+| Cscope   | Cscope search commands (s/g/c/t/e/f/i/d)         |
+| Git      | Git log/status/diff/blame/grep                   |
+| LSP      | LSP functions (definition, references, rename)   |
+| Help     | Vim help and documentation                       |
 
 # Quick Commands
 
