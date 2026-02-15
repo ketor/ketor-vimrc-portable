@@ -63,12 +63,13 @@ require() {
             echo "Use vim for requirements"
         fi
     fi
-    vim_version=`$vim_exec --version|head -n 1|awk '{print $5}'|cut -c 1,3`
-    if [ ${vim_version} -lt 80 ]
-    then
-        die "Your vim's version is too low! Please download higher version(7.4+) from http://www.vim.org/download.php"
+    vim_version=$($vim_exec --version | head -n 1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
+    vim_major=$(echo "$vim_version" | cut -d. -f1)
+    vim_minor=$(echo "$vim_version" | cut -d. -f2)
+    if [ -z "$vim_major" ] || [ "$vim_major" -lt 8 ] || { [ "$vim_major" -eq 8 ] && [ "$vim_minor" -lt 1 ]; }; then
+        die "Your vim's version($vim_version) is too low! Vim 8.1+ is required. Please download from http://www.vim.org/download.php"
     fi
-    $vim_exec --version | grep +python || die "Your vim does not have +python"
+    $vim_exec --version | grep -q '+python3' || die "Your vim does not have +python3 support"
     color_print "Checking if git exists..."
     which git || die "No git installed!\nPlease install git from http://git-scm.com/downloads/"
 }
@@ -105,24 +106,40 @@ backup_vimrc() {
     color_print "Backup Finished "$backup_date
 }
 
+append_if_missing() {
+    local line="$1"
+    local file="$2"
+    # Create file if it doesn't exist
+    if [ ! -f "$file" ]; then
+        touch "$file"
+    fi
+    # Use -x for exact line match to prevent partial matches
+    if grep -qxF "$line" "$file" 2>/dev/null; then
+        color_print "'$line' already exists in $file, skip"
+    else
+        echo "$line" >> "$file"
+        color_print "Added '$line' to $file"
+    fi
+}
+
 check_term() {
     if [ x$TERM != x"xterm-256color" ]
     then
         color_print "TERM is not xterm-256color, will set TERM=xterm-256color now"
 
-        is_zsh=`color_print $SHELL|grep 'zsh'|wc -l`
-        is_bash=`color_print $SHELL|grep 'bash'|wc -l`
+        is_zsh=`echo $SHELL|grep 'zsh'|wc -l`
+        is_bash=`echo $SHELL|grep 'bash'|wc -l`
 
         if [ $is_zsh -eq 1 ]
         then
             color_print "Your shell is zsh, set TERM in ~/.zshrc"
-            echo "export TERM=xterm-256color" >> ~/.zshrc
+            append_if_missing "export TERM=xterm-256color" ~/.zshrc
             color_print "Set TERM OK, please execute:"
             color_print "    source ~/.zshrc"
         elif [ $is_bash -eq 1 ]
         then
             color_print "Your shell is bash, set TERM in ~/.bash_profile"
-            echo "export TERM=xterm-256color" >> ~/.bash_profile
+            append_if_missing "export TERM=xterm-256color" ~/.bash_profile
             color_print "Set TERM OK, please execute:"
             color_print "    source ~/.bash_profile"
         else
@@ -134,27 +151,24 @@ check_term() {
 }
 
 check_lang() {
+    is_zsh=`echo $SHELL|grep 'zsh'|wc -l`
+    is_bash=`echo $SHELL|grep 'bash'|wc -l`
+
+    if [ $is_zsh -eq 1 ]; then
+        rc_file=~/.zshrc
+    elif [ $is_bash -eq 1 ]; then
+        rc_file=~/.bash_profile
+    else
+        rc_file=""
+    fi
+
     if [ x$LANG != x"en_US.UTF-8" ]
     then
         color_print "LANG is not en_US.UTF-8, will set LANG=en_US.UTF-8"
-
-        is_zsh=`color_print $SHELL|grep 'zsh'|wc -l`
-        is_bash=`color_print $SHELL|grep 'bash'|wc -l`
-
-        if [ $is_zsh -eq 1 ]
-        then
-            color_print "Your shell is zsh, set LANG in ~/.zshrc"
-            echo "export LANG=en_US.UTF-8" >> ~/.zshrc
-            color_print "Set LANG OK, please execute:"
-            color_print "    source ~/.zshrc"
-        elif [ $is_bash -eq 1 ]
-        then
-            color_print "Your shell is bash, set LANG in ~/.bash_profile"
-            echo "export LANG=en_US.UTF-8" >> ~/.bash_profile
-            color_print "Set LANG OK, please execute:"
-            color_print "    source ~/.bash_profile"
+        if [ -n "$rc_file" ]; then
+            append_if_missing "export LANG=en_US.UTF-8" "$rc_file"
         else
-            color_print "Your shell cannot set LANG automatically, please set LANG to xterm-256color by yourself"
+            color_print "Your shell cannot set LANG automatically, please set LANG to en_US.UTF-8 by yourself"
         fi
     else
         color_print "LANG is en_US.UTF-8, OK"
@@ -163,27 +177,17 @@ check_lang() {
     if [ x$LC_ALL != x"en_US.UTF-8" ]
     then
         color_print "LC_ALL is not en_US.UTF-8, will set LC_ALL=en_US.UTF-8"
-
-        is_zsh=`color_print $SHELL|grep 'zsh'|wc -l`
-        is_bash=`color_print $SHELL|grep 'bash'|wc -l`
-
-        if [ $is_zsh -eq 1 ]
-        then
-            color_print "Your shell is zsh, set LC_ALL in ~/.zshrc"
-            echo "export LC_ALL=en_US.UTF-8" >> ~/.zshrc
-            color_print "Set LC_ALL OK, please execute:"
-            color_print "    source ~/.zshrc"
-        elif [ $is_bash -eq 1 ]
-        then
-            color_print "Your shell is bash, set LC_ALL in ~/.bash_profile"
-            echo "export LC_ALL=en_US.UTF-8" >> ~/.bash_profile
-            color_print "Set LC_ALL OK, please execute:"
-            color_print "    source ~/.bash_profile"
+        if [ -n "$rc_file" ]; then
+            append_if_missing "export LC_ALL=en_US.UTF-8" "$rc_file"
         else
-            color_print "Your shell cannot set LC_ALL automatically, please set LC_ALL to xterm-256color by yourself"
+            color_print "Your shell cannot set LC_ALL automatically, please set LC_ALL to en_US.UTF-8 by yourself"
         fi
     else
         color_print "LC_ALL is en_US.UTF-8, OK"
+    fi
+
+    if [ -n "$rc_file" ]; then
+        color_print "Please execute: source $rc_file"
     fi
 }
 

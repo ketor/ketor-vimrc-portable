@@ -11,7 +11,7 @@ Enjoy it.
 | Runtime | Min Version | Recommended Version (full support) | Python |
 |---------|-------------|------------------------------------|--------|
 | Vim     | 8.1.2269    | 9.0.214                            | 3.8    |
-| Neovim  | 0.5         | Vim 9.0.214                        | 3.8    |
+| Neovim  | 0.5         | 0.9+                               | 3.8    |
 
 * Mac use terminal vim:
 
@@ -80,12 +80,12 @@ The leader key is ','.
 
 | Cmd     | Function                     |
 | ------- | ---------------------------- |
-| Ctags   | Genrate ctags for pwd        |
-| Gtags   | Genrate gtags for pwd        |
-| Gotags  | Genrate gotags for pwd       |
-| Cscope  | Genrate cscope files for pwd |
-| Phptags | Genrate phptags for pwd      |
-| Hex/Asc | Swtich between Asc and Hex   |
+| Ctags   | Generate ctags for pwd        |
+| Gtags   | Generate gtags for pwd        |
+| Gotags  | Generate gotags for pwd       |
+| Cscope  | Generate cscope files for pwd |
+| Phptags | Generate phptags for pwd      |
+| Hex/Asc | Switch between Asc and Hex    |
 | Hexmode | Toggle Hex/Asc mode          |
 | Cswp    | Clear swp files              |
 

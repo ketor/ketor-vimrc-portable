@@ -13,4 +13,11 @@ GPATH
 .cache
 compile_commands.json
 .history
+*.swp
+*.swo
+cscope.out
+cscope.files
+cscope.in.out
+cscope.po.out
+.netrwhist
 

@@ -752,50 +752,45 @@ inoremap <C-_>m <Esc>:call ToggleMouse()<CR>a
         set undofile
     endif
 
-"vim-multiple-cursors
-    " Called once right before you start selecting multiple cursors
+"vim-visual-multi
+    " Disable default mappings to use custom ones
+    let g:VM_default_mappings = 0
+
+    " Custom leader key (default is \\)
+    let g:VM_leader = '\\'
+
+    " Custom mappings - keep Ctrl+n/Ctrl+p style like old vim-multiple-cursors
+    let g:VM_maps = {}
+    let g:VM_maps['Find Under']                  = '<C-n>'
+    let g:VM_maps['Find Prev']                   = '<C-p>'
+    let g:VM_maps['Skip Region']                 = '<C-x>'
+    let g:VM_maps['Remove Region']               = '<C-q>'
+    let g:VM_maps['Exit']                        = '<Esc>'
+
+    " Additional useful mappings
+    let g:VM_maps['Add Cursor Down']             = '<C-Down>'
+    let g:VM_maps['Add Cursor Up']               = '<C-Up>'
+    let g:VM_maps['Select All']                  = '\\A'
+    let g:VM_maps['Start Regex Search']          = '\\/'
+    let g:VM_maps['Add Cursor At Pos']           = '\\\'
+
+    " F9 as alternative start key (similar to old multi_cursor_start_key)
+    nnoremap <silent> <F9>  :call vm#commands#find_under(0, 0)<CR>
+    xnoremap <silent> <F9>  :<C-u>call vm#commands#find_under(1, 0)<CR>
+
+    " Disable asyncomplete auto popup during visual-multi mode
     if g:my_complete_plugin == "asyncomplete"
-        function! Multiple_cursors_before()
+        function! VM_before_callback()
             let g:asyncomplete_auto_popup = 0
         endfunction
 
-        " Called once only when the multiple selection is canceled (default <Esc>)
-        function! Multiple_cursors_after()
+        function! VM_after_callback()
             let g:asyncomplete_auto_popup = 1
         endfunction
+
+        let g:VM_before_callback = 'VM_before_callback'
+        let g:VM_after_callback = 'VM_after_callback'
     endif
-
-    "If you don't like the plugin taking over your favorite key bindings, you
-    "can turn off the default with
-    let g:multi_cursor_use_default_mapping=0
-
-    " Default mapping
-    let g:multi_cursor_next_key='<C-n>'
-    let g:multi_cursor_prev_key='<C-p>'
-    let g:multi_cursor_skip_key='<C-x>'
-    let g:multi_cursor_quit_key='<Esc>'
-
-    "By default, the 'next' key is also used to enter multicursor mode. If you
-    "want to use a different key to start multicursor mode than for selecting
-    "the next location, do like the following:
-    " Map start key separately from next key
-    let g:multi_cursor_start_key='<C-_>9'
-
-    "Manually bind F9 for second multi_cursor_start_key
-    nnoremap <silent> <F9>  :call multiple_cursors#new("n", 0)<CR>
-    xnoremap <silent> <F9>  :<C-u>call multiple_cursors#new("v", 0)<CR>
-
-    "Note that when multicursor mode is started, it selects current word with
-    "boundaries, i.e. it behaves like *. If you want to avoid word boundaries in
-    "Normal mode (as g* does) but still have old behaviour up your sleeve, you can
-    "do the following
-    "let g:multi_cursor_start_key='<C-n>'
-    let g:multi_cursor_start_word_key='g<C-n>'
-
-    "You can also map your own keys to quit, if g:multi_cursor_quit_key won't
-    "work:
-    "let g:multi_cursor_quit_key='<C-c>'
-    "nnoremap <C-c> :call multiple_cursors#quit()<CR>
 
 "vim-expand-region
     "Press '+' to expand the visual selection and '_' to shrink it.
